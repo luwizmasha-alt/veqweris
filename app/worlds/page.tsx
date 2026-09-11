@@ -4,6 +4,7 @@ import { Reveal } from '@/components/reveal'
 import { SectionHeader } from '@/components/section-header'
 import { FlowDiagram } from '@/components/flow-diagram'
 import { WorldCard } from '@/components/cards'
+import { MediaPlaceholder } from '@/components/media/media-placeholder'
 import { WORLDS, WORLD_FLOW } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -20,6 +21,28 @@ export default function WorldsPage() {
         title="Original universes engineered to connect everything"
         description="A world is more than a setting. Each VEQWERIS world is a creative foundation designed to hold films, characters, music, games and the stories still to come."
       />
+
+      <Section className="border-b border-border">
+        <Reveal>
+          <MediaPlaceholder
+            kind="world"
+            ratio="ultrawide"
+            label="Featured World Reserved"
+            sublabel="Key art or a cinematic reveal for the flagship VEQWERIS world will live here."
+          />
+        </Reveal>
+        <Reveal delay={120}>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+            <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
+              The featured world anchors the universe — a single visual identity that films,
+              characters, music and gaming all extend from.
+            </p>
+            <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-silver/60">
+              Cinematic media deferred
+            </span>
+          </div>
+        </Reveal>
+      </Section>
 
       <Section className="border-b border-border">
         <SectionHeader

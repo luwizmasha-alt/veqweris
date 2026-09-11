@@ -4,6 +4,7 @@ import { Reveal } from '@/components/reveal'
 import { SectionHeader } from '@/components/section-header'
 import { FlowDiagram } from '@/components/flow-diagram'
 import { GameCard } from '@/components/cards'
+import { MediaPlaceholder } from '@/components/media/media-placeholder'
 import { GAMES, GAME_FLOW } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -20,6 +21,28 @@ export default function GamingPage() {
         title="Step inside the worlds"
         description="VEQWERIS Gaming turns stories into experiences — interactive worlds that extend films, characters and universes into play."
       />
+
+      <Section className="border-b border-border">
+        <Reveal>
+          <MediaPlaceholder
+            kind="video"
+            ratio="ultrawide"
+            label="Key Art / Trailer Reserved"
+            sublabel="Game key art, a gameplay reveal or an announce trailer will play here."
+          />
+        </Reveal>
+        <Reveal delay={120}>
+          <div className="mt-6 flex flex-wrap items-center justify-between gap-4">
+            <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
+              A single cinematic frame that introduces the flagship experience — ready to hold key
+              art, gameplay visuals or an announce trailer.
+            </p>
+            <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-silver/60">
+              Cinematic media deferred
+            </span>
+          </div>
+        </Reveal>
+      </Section>
 
       <Section className="border-b border-border">
         <SectionHeader
