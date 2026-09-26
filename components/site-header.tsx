@@ -112,7 +112,7 @@ export function SiteHeader() {
     event.preventDefault()
     const trimmed = query.trim()
     if (!trimmed) return
-    router.push(`/search?q=${encodeURIComponent(trimmed)}`)
+    router.push(`/search/${encodeURIComponent(trimmed)}`)
     setOpen(false)
   }
 
