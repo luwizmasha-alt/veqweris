@@ -1,8 +1,8 @@
 'use client'
 
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { useEffect, useMemo, useState } from 'react'
+import { usePathname, useRouter } from 'next/navigation'
+import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth-provider'
 import { NAV_ITEMS, SYSTEMS_APP_URL } from '@/lib/site'
 import { VeqLogo } from '@/components/veq-logo'
@@ -34,6 +34,7 @@ const BASE_SEARCH_ITEMS = [
 
 export function SiteHeader() {
   const pathname = usePathname()
+  const router = useRouter()
   const { isAuthenticated, user, logout } = useAuth()
   const isAdmin = isAuthenticated && user?.role === 'admin'
   const [uploadedSearchItems, setUploadedSearchItems] = useState<Array<{ label: string; href: string; type: string; description: string }>>([])
@@ -107,6 +108,14 @@ export function SiteHeader() {
     }
   }, [open])
 
+  const handleSearchSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    const trimmed = query.trim()
+    if (!trimmed) return
+    router.push(`/search?q=${encodeURIComponent(trimmed)}`)
+    setOpen(false)
+  }
+
   return (
     <header
       className={cn(
@@ -120,14 +129,14 @@ export function SiteHeader() {
         <VeqLogo />
 
         <div className="flex flex-1 justify-center px-2 sm:px-4 lg:px-6">
-          <div className="relative w-full max-w-lg lg:max-w-xl">
+          <form onSubmit={handleSearchSubmit} className="relative w-full max-w-lg lg:max-w-xl">
             <input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search VEQWERIS"
               aria-label="Search VEQWERIS pages"
-              className="h-10 w-full rounded-full border border-border bg-card/80 pl-11 pr-5 text-sm text-foreground placeholder:text-muted-foreground focus:border-electric-blue/60 focus:outline-none"
+              className="h-10 w-full rounded-full border border-border bg-card/80 pl-11 pr-20 text-sm text-foreground placeholder:text-muted-foreground focus:border-electric-blue/60 focus:outline-none"
             />
             <svg
               viewBox="0 0 24 24"
@@ -142,6 +151,12 @@ export function SiteHeader() {
               <circle cx="11" cy="11" r="6" />
               <path d="M16 16L21 21" />
             </svg>
+            <button
+              type="submit"
+              className="absolute right-2 top-1/2 inline-flex -translate-y-1/2 items-center justify-center rounded-full bg-primary px-3 py-1.5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-primary-foreground transition hover:bg-electric-blue"
+            >
+              Search
+            </button>
 
             {searchResults.length > 0 && (
               <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-border bg-near-black/95 shadow-[0_20px_40px_rgba(2,5,10,0.55)] backdrop-blur-xl">
@@ -168,7 +183,7 @@ export function SiteHeader() {
                 ))}
               </div>
             )}
-          </div>
+          </form>
         </div>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
