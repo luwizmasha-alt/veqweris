@@ -16,6 +16,7 @@ export type UploadItem = {
   description: string
   status: string
   image: string
+  video?: string
   href: string
   createdAt: string
 }
@@ -107,6 +108,9 @@ export function ensureSeededUsers(): SiteUser[] {
 
 export function saveUsers(users: SiteUser[]) {
   writeStorage(USERS_STORAGE_KEY, users)
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('veqweris-user-sync'))
+  }
 }
 
 export function getUploads(): UploadItem[] {
@@ -121,4 +125,7 @@ export function getUploads(): UploadItem[] {
 
 export function saveUploads(items: UploadItem[]) {
   writeStorage(UPLOADS_STORAGE_KEY, items)
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('veqweris-upload-sync'))
+  }
 }

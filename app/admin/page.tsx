@@ -30,6 +30,7 @@ const createDefaultItem = (): Omit<UploadItem, 'id' | 'createdAt'> => ({
   description: '',
   status: 'Draft',
   image: '/media/brand/veqweris-logo.png',
+  video: '',
   href: '/systems',
 })
 
@@ -49,6 +50,21 @@ export default function AdminPage() {
     reader.onload = () => {
       const result = typeof reader.result === 'string' ? reader.result : '/media/brand/veqweris-logo.png'
       setForm((current) => ({ ...current, image: result }))
+      event.target.value = ''
+    }
+    reader.readAsDataURL(file)
+  }
+
+  const handleVideoPick = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (!file) {
+      return
+    }
+
+    const reader = new FileReader()
+    reader.onload = () => {
+      const result = typeof reader.result === 'string' ? reader.result : ''
+      setForm((current) => ({ ...current, video: result }))
       event.target.value = ''
     }
     reader.readAsDataURL(file)
@@ -118,12 +134,19 @@ export default function AdminPage() {
       category: form.category.trim() || 'systems',
       href: form.href.trim() || '/systems',
       image: (form.image ?? '').trim() || '/media/brand/veqweris-logo.png',
+      video: (form.video ?? '').trim() || undefined,
     }
 
     const nextItems = [nextItem, ...items]
     setItems(nextItems)
     saveUploads(nextItems)
     setForm(createDefaultItem())
+  }
+
+  const handleDeleteItem = (itemId: string) => {
+    const nextItems = items.filter((item) => item.id !== itemId)
+    setItems(nextItems)
+    saveUploads(nextItems)
   }
 
   if (!isReady || !user || user.role !== 'admin') {
@@ -258,9 +281,26 @@ export default function AdminPage() {
               <p className="mt-2 text-xs text-muted-foreground">Select an image from your device. It will be used for this project.</p>
             </div>
 
+            <div>
+              <label className="mb-2 block text-sm text-foreground">Project video</label>
+              <input
+                type="file"
+                accept="video/*"
+                onChange={handleVideoPick}
+                className="w-full rounded-md border border-dashed border-border bg-background px-3 py-2.5 text-sm text-foreground file:mr-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-xs file:font-semibold file:uppercase file:tracking-[0.18em] file:text-primary-foreground"
+              />
+              <p className="mt-2 text-xs text-muted-foreground">Attach a video from your device. It will be saved with this upload.</p>
+            </div>
+
             {form.image ? (
               <div className="overflow-hidden rounded-xl border border-border bg-background p-3">
                 <img src={form.image} alt="Project preview" className="h-28 w-full rounded-lg object-cover" />
+              </div>
+            ) : null}
+
+            {form.video ? (
+              <div className="overflow-hidden rounded-xl border border-border bg-background p-3">
+                <video src={form.video} controls className="h-40 w-full rounded-lg object-cover" />
               </div>
             ) : null}
 
@@ -280,27 +320,41 @@ export default function AdminPage() {
               <p className="text-sm text-muted-foreground">No uploads yet. Add your first item.</p>
             ) : (
               items.map((item) => (
-                <Link
-                  key={item.id}
-                  href={item.href || '/'}
-                  className="block rounded-xl border border-border bg-background p-4 transition hover:border-electric-blue/40 hover:bg-card"
-                >
-                  <div className="flex items-center gap-3">
-                    <img src={item.image} alt={item.title} className="h-12 w-12 rounded-md object-cover" />
-                    <div className="min-w-0 flex-1">
-                      <p className="truncate text-base font-semibold text-foreground">{item.title}</p>
-                      <p className="text-xs uppercase tracking-[0.18em] text-electric-blue">{item.category}</p>
+                <div key={item.id} className="rounded-xl border border-border bg-background p-4 transition hover:border-electric-blue/40 hover:bg-card">
+                  <div className="flex items-start gap-3">
+                    <Link href={item.href || '/'} className="flex min-w-0 flex-1 items-center gap-3">
+                      <img src={item.image} alt={item.title} className="h-12 w-12 rounded-md object-cover" />
+                      <div className="min-w-0 flex-1">
+                        <p className="truncate text-base font-semibold text-foreground">{item.title}</p>
+                        <p className="text-xs uppercase tracking-[0.18em] text-electric-blue">{item.category}</p>
+                      </div>
+                    </Link>
+                    <div className="flex items-center gap-2">
+                      <span className="rounded-full border border-border px-2 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
+                        {item.status}
+                      </span>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteItem(item.id)}
+                        className="rounded-md border border-red-500/40 px-2 py-1 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-red-300 transition hover:bg-red-500/10"
+                      >
+                        Remove
+                      </button>
                     </div>
-                    <span className="rounded-full border border-border px-2 py-1 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground">
-                      {item.status}
-                    </span>
                   </div>
+
+                  {item.video ? (
+                    <div className="mt-4 overflow-hidden rounded-lg border border-border bg-background">
+                      <video src={item.video} controls className="h-32 w-full object-cover" />
+                    </div>
+                  ) : null}
+
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.description}</p>
                   <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
                     <span>{item.href}</span>
                     <span>{new Date(item.createdAt).toLocaleDateString()}</span>
                   </div>
-                </Link>
+                </div>
               ))
             )}
           </div>

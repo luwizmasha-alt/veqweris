@@ -7,6 +7,7 @@ import { useAuth } from '@/components/auth-provider'
 import { NAV_ITEMS, SYSTEMS_APP_URL } from '@/lib/site'
 import { VeqLogo } from '@/components/veq-logo'
 import { cn } from '@/lib/utils'
+import { getUploads } from '@/lib/admin-data'
 import {
   CAREER_AREAS,
   CHARACTERS,
@@ -35,13 +36,39 @@ export function SiteHeader() {
   const pathname = usePathname()
   const { isAuthenticated, user, logout } = useAuth()
   const isAdmin = isAuthenticated && user?.role === 'admin'
+  const [uploadedSearchItems, setUploadedSearchItems] = useState<Array<{ label: string; href: string; type: string; description: string }>>([])
   const SEARCH_ITEMS = isAdmin
-    ? [...BASE_SEARCH_ITEMS, { label: 'Admin', href: '/admin', type: 'Admin', description: 'Content management area' }]
-    : BASE_SEARCH_ITEMS
+    ? [...BASE_SEARCH_ITEMS, { label: 'Admin', href: '/admin', type: 'Admin', description: 'Content management area' }, ...uploadedSearchItems]
+    : [...BASE_SEARCH_ITEMS, ...uploadedSearchItems]
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [searchResults, setSearchResults] = useState<Array<(typeof BASE_SEARCH_ITEMS)[number]>>([])
+  const [searchResults, setSearchResults] = useState<Array<(typeof BASE_SEARCH_ITEMS)[number] & { type: string; description: string }>>([])
+
+  useEffect(() => {
+    const syncUploadedSearchItems = () => {
+      try {
+        const uploadedItems = getUploads().map((item) => ({
+          label: item.title,
+          href: item.href || '/music',
+          type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
+          description: item.description,
+        }))
+        setUploadedSearchItems(uploadedItems)
+      } catch {
+        setUploadedSearchItems([])
+      }
+    }
+
+    syncUploadedSearchItems()
+    window.addEventListener('veqweris-upload-sync', syncUploadedSearchItems)
+    window.addEventListener('storage', syncUploadedSearchItems)
+
+    return () => {
+      window.removeEventListener('veqweris-upload-sync', syncUploadedSearchItems)
+      window.removeEventListener('storage', syncUploadedSearchItems)
+    }
+  }, [])
 
   useEffect(() => {
     const normalized = query.trim().toLowerCase()
@@ -53,10 +80,10 @@ export function SiteHeader() {
     const matches = SEARCH_ITEMS.filter((item) => {
       const haystack = [item.label, item.description ?? '', item.type ?? '', item.href].join(' ').toLowerCase()
       return haystack.includes(normalized)
-    }).slice(0, 6)
+    }).slice(0, 8)
 
     setSearchResults(matches)
-  }, [query])
+  }, [query, SEARCH_ITEMS])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -88,7 +115,7 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <VeqLogo />
 
-        <div className="hidden flex-1 justify-center lg:flex">
+        <div className="flex flex-1 justify-center">
           <div className="relative w-full max-w-md">
             <input
               type="search"
