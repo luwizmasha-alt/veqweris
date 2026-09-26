@@ -17,7 +17,7 @@ export function VeqLogo({
   href = '/',
 }: VeqLogoProps) {
   const content = (
-    <span className={cn('inline-flex items-center gap-2.5', className)}>
+    <span className={cn('inline-flex items-center gap-1.5 sm:gap-2.5', className)}>
       <Image
         src="/media/brand/veqweris-logo.png"
         alt="VEQWERIS emblem"
@@ -28,7 +28,7 @@ export function VeqLogo({
         style={{ width: size, height: size, objectFit: 'contain' }}
       />
       {showWordmark && (
-        <span className="font-sans text-[0.95rem] font-semibold tracking-[0.34em] text-foreground">
+        <span className="font-sans text-[0.9rem] font-semibold tracking-[0.26em] text-foreground sm:text-[0.95rem]">
           VEQWERIS
         </span>
       )}
@@ -37,7 +37,7 @@ export function VeqLogo({
 
   if (href) {
     return (
-      <Link href={href} aria-label="VEQWERIS home" className="inline-flex items-center">
+      <Link href={href} aria-label="VEQWERIS home" className="inline-flex items-center -ml-2 sm:-ml-3">
         {content}
       </Link>
     )
