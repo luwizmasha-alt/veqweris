@@ -119,15 +119,15 @@ export function SiteHeader() {
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <VeqLogo />
 
-        <div className="flex flex-1 justify-center">
-          <div className="relative w-full max-w-md">
+        <div className="flex flex-1 justify-center px-2 sm:px-4 lg:px-6">
+          <div className="relative w-full max-w-lg lg:max-w-xl">
             <input
               type="search"
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search VEQWERIS"
               aria-label="Search VEQWERIS pages"
-              className="h-10 w-full rounded-full border border-border bg-card/80 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-electric-blue/60 focus:outline-none"
+              className="h-10 w-full rounded-full border border-border bg-card/80 pl-11 pr-5 text-sm text-foreground placeholder:text-muted-foreground focus:border-electric-blue/60 focus:outline-none"
             />
             <svg
               viewBox="0 0 24 24"
