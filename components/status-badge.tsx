@@ -2,8 +2,10 @@ import { cn } from '@/lib/utils'
 
 export type Status =
   | 'Concept'
+  | 'Draft'
   | 'In Development'
   | 'Production'
+  | 'Published'
   | 'Announced'
   | 'Released'
   | 'Exploratory'
@@ -11,8 +13,10 @@ export type Status =
 
 const styles: Record<string, string> = {
   Concept: 'border-silver/30 text-silver',
+  Draft: 'border-silver/30 text-silver',
   'In Development': 'border-electric-blue/50 text-electric-blue',
   Production: 'border-electric-blue/50 text-electric-blue',
+  Published: 'border-electric-blue/60 text-foreground bg-electric-blue/10',
   Announced: 'border-primary-blue/60 text-electric-blue',
   Released: 'border-electric-blue/60 text-foreground bg-electric-blue/10',
   Exploratory: 'border-silver/30 text-silver',

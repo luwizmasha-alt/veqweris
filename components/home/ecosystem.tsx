@@ -44,7 +44,7 @@ export function Ecosystem() {
             >
               <Link
                 href={division.href}
-                className="group relative flex h-full flex-col justify-between overflow-hidden rounded-lg border border-border bg-card p-7 transition-colors duration-300 hover:border-electric-blue/40"
+                className="group relative flex h-full flex-col justify-between overflow-hidden rounded-lg border border-border bg-card p-7 transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/40 hover:shadow-[0_0_30px_rgba(45,140,255,0.12)]"
               >
                 <div
                   className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"

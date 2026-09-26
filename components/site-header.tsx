@@ -3,12 +3,14 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useEffect, useState } from 'react'
+import { useAuth } from '@/components/auth-provider'
 import { NAV_ITEMS, SYSTEMS_APP_URL } from '@/lib/site'
 import { VeqLogo } from '@/components/veq-logo'
 import { cn } from '@/lib/utils'
 
 export function SiteHeader() {
   const pathname = usePathname()
+  const { isAuthenticated, user, logout } = useAuth()
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
 
@@ -64,9 +66,42 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
+          {isAuthenticated ? (
+            <>
+              <Link
+                href={user?.role === 'admin' ? '/admin' : '/'}
+                className="hidden h-10 items-center rounded-md border border-border bg-card px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-foreground sm:inline-flex"
+              >
+                {user?.role === 'admin' ? 'Admin' : 'My account'}
+              </Link>
+              <button
+                type="button"
+                onClick={logout}
+                className="hidden h-10 items-center rounded-md border border-border px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground transition hover:text-foreground sm:inline-flex"
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="hidden h-10 items-center rounded-md border border-border px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-foreground transition hover:bg-card sm:inline-flex"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="hidden h-10 items-center rounded-md bg-primary px-5 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)] sm:inline-flex"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
+
           <Link
             href={SYSTEMS_APP_URL}
-            className="hidden h-10 items-center rounded-md bg-primary px-5 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)] sm:inline-flex"
+            className="hidden h-10 items-center rounded-md bg-primary px-5 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)] lg:inline-flex"
           >
             Enter Systems
           </Link>
@@ -125,6 +160,38 @@ export function SiteHeader() {
               </Link>
             )
           })}
+          {isAuthenticated ? (
+            <>
+              <Link
+                href={user?.role === 'admin' ? '/admin' : '/'}
+                className="mt-4 inline-flex h-12 items-center justify-center rounded-md border border-border bg-card text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-foreground"
+              >
+                {user?.role === 'admin' ? 'Admin panel' : 'My account'}
+              </Link>
+              <button
+                type="button"
+                onClick={logout}
+                className="mt-2 inline-flex h-12 items-center justify-center rounded-md border border-border text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+              >
+                Log out
+              </button>
+            </>
+          ) : (
+            <>
+              <Link
+                href="/auth/login"
+                className="mt-4 inline-flex h-12 items-center justify-center rounded-md border border-border text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-foreground"
+              >
+                Log in
+              </Link>
+              <Link
+                href="/auth/signup"
+                className="mt-2 inline-flex h-12 items-center justify-center rounded-md bg-primary text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground"
+              >
+                Sign up
+              </Link>
+            </>
+          )}
           <Link
             href={SYSTEMS_APP_URL}
             className="mt-4 inline-flex h-12 items-center justify-center rounded-md bg-primary text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground"

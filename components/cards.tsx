@@ -4,7 +4,7 @@ import type { Character, Film, Game, Platform, Release, World } from '@/lib/cont
 
 function MetaRow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted-foreground">
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1 font-mono text-[0.58rem] uppercase tracking-[0.2em] text-silver/70">
       {children}
     </div>
   )
@@ -54,8 +54,8 @@ export function CharacterCard({ character }: { character: Character }) {
 }
 
 export function WorldCard({ world }: { world: World }) {
-  return (
-    <article className="group overflow-hidden rounded-lg border border-border bg-card transition-colors duration-300 hover:border-electric-blue/40">
+  const content = (
+    <>
       <MediaPlaceholder kind="world" ratio="wide" label="World Art Reserved" rounded={false} />
       <div className="p-7">
         <div className="flex items-center justify-between gap-4">
@@ -64,26 +64,67 @@ export function WorldCard({ world }: { world: World }) {
         </div>
         <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{world.premise}</p>
       </div>
-    </article>
+    </>
   )
+
+  if (world.href) {
+    return (
+      <a href={world.href} className="group block overflow-hidden rounded-lg border border-border bg-card transition-colors duration-300 hover:border-electric-blue/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue/60">
+        {content}
+      </a>
+    )
+  }
+
+  return <article className="group overflow-hidden rounded-lg border border-border bg-card transition-colors duration-300 hover:border-electric-blue/40">{content}</article>
 }
 
 export function MusicCard({ release }: { release: Release }) {
-  return (
-    <article className="group flex flex-col">
-      <MediaPlaceholder kind="music" ratio="square" label="Artwork Reserved" />
-      <div className="mt-4">
+  const content = (
+    <>
+      <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#081827]">
+        <MediaPlaceholder
+          kind="music"
+          ratio="square"
+          src={release.image}
+          alt={release.alt ?? release.title}
+          label={release.title}
+          className="!aspect-[1/1]"
+        />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(45,140,255,0.18),_transparent_55%)]" />
+      </div>
+      <div className="mt-2.5">
         <MetaRow>
           <span>{release.type}</span>
         </MetaRow>
-        <h3 className="mt-2 text-base font-semibold tracking-tight text-foreground">
+        <h3 className="mt-1 text-[0.74rem] font-semibold tracking-[0.08em] text-foreground uppercase">
           {release.title}
         </h3>
-        <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{release.description}</p>
-        <div className="mt-4">
+        <p className="mt-0.5 text-[0.62rem] leading-relaxed text-muted-foreground">{release.description}</p>
+        <div className="mt-2">
           <StatusBadge status={release.status} />
         </div>
       </div>
+    </>
+  )
+
+  const isPublishedRelease = release.status === 'Published' || release.status === 'Released'
+
+  if (isPublishedRelease && release.href) {
+    return (
+      <a
+        href={release.href}
+        target={release.href.startsWith('http') ? '_blank' : undefined}
+        rel={release.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+        className="group block rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(8,22,38,0.98),rgba(5,12,20,0.96))] p-2.5 shadow-[0_12px_40px_rgba(2,5,10,0.52)] transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/60 hover:shadow-[0_20px_50px_rgba(45,140,255,0.18)]"
+      >
+        {content}
+      </a>
+    )
+  }
+
+  return (
+    <article className="group flex flex-col rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(8,22,38,0.98),rgba(5,12,20,0.96))] p-2.5 shadow-[0_12px_40px_rgba(2,5,10,0.52)] transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/60 hover:shadow-[0_20px_50px_rgba(45,140,255,0.18)]">
+      {content}
     </article>
   )
 }

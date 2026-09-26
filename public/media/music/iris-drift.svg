@@ -1,0 +1,29 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="1200" fill="#050B16"/>
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <circle cx="920" cy="260" r="280" fill="rgba(45,140,255,0.2)"/>
+  <circle cx="370" cy="900" r="340" fill="rgba(78,210,255,0.14)"/>
+  <path d="M180 760C340 600 520 500 760 420C870 380 955 300 1010 220V1020H180V760Z" fill="url(#glow)" opacity="0.9"/>
+  <path d="M205 828C355 665 520 570 760 487C844 455 930 421 990 358V976H205V828Z" fill="url(#wave)" opacity="0.75"/>
+  <path d="M470 245V845" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M670 245V845" stroke="rgba(255,255,255,0.35)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M300 410C390 345 470 313 540 300" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
+  <path d="M610 300C675 315 765 355 845 415" stroke="rgba(255,255,255,0.5)" stroke-width="3" stroke-linecap="round"/>
+  <text x="600" y="1020" text-anchor="middle" fill="#EAF5FF" font-family="Arial, Helvetica, sans-serif" font-size="84" letter-spacing="10">IRIS / DRIFT</text>
+  <defs>
+    <linearGradient id="bg" x1="180" y1="130" x2="1040" y2="1020" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#081521"/>
+      <stop offset="0.5" stop-color="#0B1E2F"/>
+      <stop offset="1" stop-color="#04070D"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="316" y1="260" x2="1010" y2="1010" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#2D8CFF"/>
+      <stop offset="0.45" stop-color="#5EE7FF"/>
+      <stop offset="1" stop-color="#0A1732"/>
+    </linearGradient>
+    <linearGradient id="wave" x1="182" y1="330" x2="1010" y2="990" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#D0F5FF" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#2D8CFF" stop-opacity="0.8"/>
+    </linearGradient>
+  </defs>
+</svg>

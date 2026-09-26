@@ -37,7 +37,7 @@ export function PageHero({
         className="absolute inset-0 -z-10"
         style={{
           background:
-            'radial-gradient(90% 60% at 50% -10%, rgba(45,140,255,0.16), transparent 55%), linear-gradient(180deg, #061326 0%, #02050a 100%)',
+            'radial-gradient(80% 60% at 50% 0%, rgba(255,79,79,0.14), transparent 38%), radial-gradient(80% 60% at 50% 20%, rgba(45,140,255,0.18), transparent 60%), linear-gradient(180deg, #061326 0%, #02050a 100%)',
         }}
       />
       <div className="veq-grid absolute inset-0 -z-10 opacity-30" />
@@ -45,7 +45,7 @@ export function PageHero({
         <p className="font-mono text-[0.7rem] uppercase tracking-[0.34em] text-electric-blue">
           {eyebrow}
         </p>
-        <h1 className="mt-5 max-w-4xl text-balance text-4xl font-semibold leading-tight tracking-tight text-foreground sm:text-6xl">
+        <h1 className="mt-5 max-w-4xl text-balance text-4xl font-black uppercase leading-[0.9] tracking-[0.08em] text-foreground sm:text-6xl">
           {title}
         </h1>
         {description && (

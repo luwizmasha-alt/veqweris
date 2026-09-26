@@ -15,18 +15,22 @@ const connections = [
   {
     k: 'Technology & Systems',
     v: 'Software that brings visibility and coordination to complex organizations.',
+    href: '/systems',
   },
   {
     k: 'Creative Production',
     v: 'Films, series, characters and worlds developed as original intellectual property.',
+    href: '/studios',
   },
   {
     k: 'Music & Gaming',
     v: 'Sound and interactive experiences that extend our stories beyond the screen.',
+    href: '/music',
   },
   {
     k: 'Research',
     v: 'Exploration of emerging technology that informs everything we build.',
+    href: '/labs',
   },
 ]
 
@@ -63,10 +67,18 @@ export default function AboutPage() {
         <div className="mt-12 grid grid-cols-1 gap-px overflow-hidden rounded-lg border border-border bg-border sm:grid-cols-2">
           {connections.map((item, i) => (
             <Reveal key={item.k} delay={(i % 2) * 100}>
-              <div className="h-full bg-card p-8">
-                <h3 className="text-lg font-semibold tracking-tight text-foreground">{item.k}</h3>
+              <Link
+                href={item.href}
+                className="group block h-full bg-card p-8 transition-all duration-300 hover:-translate-y-0.5 hover:bg-card/80 hover:shadow-[0_0_24px_rgba(45,140,255,0.08)]"
+              >
+                <div className="flex items-center justify-between gap-4">
+                  <h3 className="text-lg font-semibold tracking-tight text-foreground">{item.k}</h3>
+                  <span className="font-mono text-[0.62rem] uppercase tracking-[0.22em] text-electric-blue transition-transform duration-300 group-hover:translate-x-1">
+                    View
+                  </span>
+                </div>
                 <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{item.v}</p>
-              </div>
+              </Link>
             </Reveal>
           ))}
         </div>

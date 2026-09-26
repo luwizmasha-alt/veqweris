@@ -154,6 +154,7 @@ export type World = {
   name: string
   premise: string
   status: Status
+  href?: string
 }
 
 export const WORLDS: World[] = [
@@ -162,12 +163,14 @@ export const WORLDS: World[] = [
     premise:
       'An original universe under development, designed to connect film, characters, music and gaming.',
     status: 'Concept',
+    href: '/studios',
   },
   {
     name: 'World Two — Reserved',
     premise:
       'A second creative universe with its own lore, locations and timeline. Details reserved.',
     status: 'Concept',
+    href: '/music',
   },
 ]
 
@@ -179,26 +182,38 @@ export type Release = {
   type: 'Single' | 'Album' | 'Soundtrack' | 'Score'
   status: Status
   description: string
+  image?: string
+  alt?: string
+  href?: string
 }
 
 export const RELEASES: Release[] = [
   {
-    title: 'Release Reserved',
-    type: 'Soundtrack',
-    status: 'In Development',
-    description: 'An original score composed for an upcoming VEQWERIS Studios production.',
-  },
-  {
-    title: 'Release Reserved',
+    title: 'Iris / Drift',
     type: 'Single',
-    status: 'Concept',
-    description: 'An original single from the VEQWERIS Music catalog. Details reserved.',
+    status: 'Published',
+    description: 'A drifting electronic cut shaped by pale synths, distant percussion and a slow-motion sense of escape.',
+    image: '/media/music/iris-drift.svg',
+    alt: 'Iris / Drift album art',
+    href: 'https://www.youtube.com/@veqwerismusicart',
   },
   {
-    title: 'Release Reserved',
+    title: 'Atlas of Echoes',
     type: 'Album',
-    status: 'Concept',
-    description: 'A full-length body of work connected to the VEQWERIS creative universe.',
+    status: 'In Development',
+    description: 'A layered narrative album tracing memory, motion and the emotional topology of an imagined world.',
+    image: '/media/music/atlas-of-echoes.svg',
+    alt: 'Atlas of Echoes album art',
+    href: 'https://music.youtube.com/@veqwerismusicart',
+  },
+  {
+    title: 'Signal / Noise',
+    type: 'Soundtrack',
+    status: 'Production',
+    description: 'A cinematic score built from tension, rhythm and atmospheric textures for a high-contrast story world.',
+    image: '/media/music/signal-noise.svg',
+    alt: 'Signal / Noise album art',
+    href: 'https://www.youtube.com/@veqwerismusicart',
   },
 ]
 
@@ -209,10 +224,10 @@ export type Platform = {
 }
 
 export const MUSIC_PLATFORMS: Platform[] = [
-  { platformName: 'YouTube', availability: 'Coming soon', officialUrl: null },
-  { platformName: 'YouTube Music', availability: 'Coming soon', officialUrl: null },
-  { platformName: 'Spotify', availability: 'Coming soon', officialUrl: null },
-  { platformName: 'Apple Music', availability: 'Coming soon', officialUrl: null },
+  { platformName: 'YouTube', availability: 'Official uploads', officialUrl: 'https://www.youtube.com/@veqwerismusicart' },
+  { platformName: 'YouTube Music', availability: 'Catalog sync', officialUrl: 'https://music.youtube.com/@veqwerismusicart' },
+  { platformName: 'Spotify', availability: 'Release updates', officialUrl: 'https://open.spotify.com/search/veqwerismusicart' },
+  { platformName: 'Apple Music', availability: 'Library listing', officialUrl: 'https://music.apple.com/search?term=veqwerismusicart' },
 ]
 
 export type Game = {
