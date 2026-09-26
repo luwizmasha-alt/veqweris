@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useAuth } from '@/components/auth-provider'
 import { NAV_ITEMS, SYSTEMS_APP_URL } from '@/lib/site'
 import { VeqLogo } from '@/components/veq-logo'
@@ -37,9 +37,13 @@ export function SiteHeader() {
   const { isAuthenticated, user, logout } = useAuth()
   const isAdmin = isAuthenticated && user?.role === 'admin'
   const [uploadedSearchItems, setUploadedSearchItems] = useState<Array<{ label: string; href: string; type: string; description: string }>>([])
-  const SEARCH_ITEMS = isAdmin
-    ? [...BASE_SEARCH_ITEMS, { label: 'Admin', href: '/admin', type: 'Admin', description: 'Content management area' }, ...uploadedSearchItems]
-    : [...BASE_SEARCH_ITEMS, ...uploadedSearchItems]
+  const SEARCH_ITEMS = useMemo(
+    () =>
+      isAdmin
+        ? [...BASE_SEARCH_ITEMS, { label: 'Admin', href: '/admin', type: 'Admin', description: 'Content management area' }, ...uploadedSearchItems]
+        : [...BASE_SEARCH_ITEMS, ...uploadedSearchItems],
+    [isAdmin, uploadedSearchItems],
+  )
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState('')
