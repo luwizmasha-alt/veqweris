@@ -23,23 +23,21 @@ export default function AdminLoginPage() {
     return null
   }
 
-  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    const response = await fetch('/api/admin/login', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password, code }),
-    })
+    const authenticatedUser = login(email, password)
 
-    const payload = await response.json().catch(() => ({}))
-
-    if (!response.ok) {
-      setError(payload.error ?? 'Unable to authenticate administrator.')
+    if (!authenticatedUser) {
+      setError('Invalid admin credentials. Please use the authorized administrator account.')
       return
     }
 
-    login(email, password)
+    if (authenticatedUser.role !== 'admin') {
+      setError('This account is not authorized for the administrator workspace.')
+      return
+    }
+
     router.replace('/admin')
   }
 

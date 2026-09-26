@@ -26,15 +26,14 @@ export default function LoginPage() {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    const success = login(email, password)
+    const authenticatedUser = login(email, password)
 
-    if (!success) {
+    if (!authenticatedUser) {
       setError('The email or password is incorrect. Please try a valid account.')
       return
     }
 
-    const nextPath = user?.role === 'admin' ? '/admin' : '/'
-    router.replace(nextPath)
+    router.replace(authenticatedUser.role === 'admin' ? '/admin' : '/')
   }
 
   return (

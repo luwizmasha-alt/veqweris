@@ -22,7 +22,7 @@ type AuthContextValue = {
   user: SiteUser | null
   isReady: boolean
   isAuthenticated: boolean
-  login: (email: string, password: string) => boolean
+  login: (email: string, password: string) => SiteUser | null
   signup: (name: string, email: string, password: string) => boolean
   logout: () => void
 }
@@ -50,7 +50,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [])
 
-  const login = useCallback((email: string, password: string) => {
+  const login = useCallback((email: string, password: string): SiteUser | null => {
     const users = ensureSeededUsers()
     const foundUser = users.find(
       (candidate) =>
@@ -59,12 +59,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     )
 
     if (!foundUser) {
-      return false
+      return null
     }
 
     setUser(foundUser)
     window.localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(foundUser))
-    return true
+    return foundUser
   }, [])
 
   const signup = useCallback((name: string, email: string, password: string) => {
