@@ -113,7 +113,23 @@ export function saveUsers(users: SiteUser[]) {
   }
 }
 
-export function getUploads(): UploadItem[] {
+export async function getUploads(): Promise<UploadItem[]> {
+  if (typeof window === 'undefined') {
+    return DEFAULT_UPLOADS
+  }
+
+  try {
+    const response = await fetch('/api/uploads', { cache: 'no-store' })
+    if (response.ok) {
+      const payload = (await response.json().catch(() => ({}))) as { uploads?: UploadItem[] }
+      if (Array.isArray(payload.uploads)) {
+        return payload.uploads
+      }
+    }
+  } catch {
+    // Fall back to local storage below.
+  }
+
   const storedUploads = readStorage<UploadItem[]>(UPLOADS_STORAGE_KEY, [])
   if (storedUploads.length > 0) {
     return storedUploads
@@ -123,7 +139,25 @@ export function getUploads(): UploadItem[] {
   return DEFAULT_UPLOADS
 }
 
-export function saveUploads(items: UploadItem[]) {
+export async function saveUploads(items: UploadItem[]) {
+  if (typeof window !== 'undefined') {
+    try {
+      const response = await fetch('/api/uploads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ uploads: items }),
+      })
+
+      if (response.ok) {
+        writeStorage(UPLOADS_STORAGE_KEY, items)
+        window.dispatchEvent(new Event('veqweris-upload-sync'))
+        return
+      }
+    } catch {
+      // Fall back to local storage below.
+    }
+  }
+
   writeStorage(UPLOADS_STORAGE_KEY, items)
   if (typeof window !== 'undefined') {
     window.dispatchEvent(new Event('veqweris-upload-sync'))

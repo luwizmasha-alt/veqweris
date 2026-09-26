@@ -34,7 +34,7 @@ export default async function SearchRoomPage({
   const { slug } = await params
   const roomTitle = normalizeSlug(slug)
 
-  const uploadedItems = getUploads().map((item) => ({
+  const uploadedItems = (await getUploads()).map((item) => ({
     label: item.title,
     href: item.href || '/systems',
     type: item.category.charAt(0).toUpperCase() + item.category.slice(1),

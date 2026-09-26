@@ -33,17 +33,21 @@ export default function SearchPage() {
   const [items, setItems] = useState(BASE_SEARCH_ITEMS)
 
   useEffect(() => {
-    try {
-      const uploaded = getUploads().map((item) => ({
-        label: item.title,
-        href: item.href || '/systems',
-        type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
-        description: item.description,
-      }))
-      setItems([...BASE_SEARCH_ITEMS, ...uploaded])
-    } catch {
-      setItems(BASE_SEARCH_ITEMS)
+    const loadUploadedItems = async () => {
+      try {
+        const uploaded = (await getUploads()).map((item) => ({
+          label: item.title,
+          href: item.href || '/systems',
+          type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
+          description: item.description,
+        }))
+        setItems([...BASE_SEARCH_ITEMS, ...uploaded])
+      } catch {
+        setItems(BASE_SEARCH_ITEMS)
+      }
     }
+
+    void loadUploadedItems()
   }, [])
 
   return (

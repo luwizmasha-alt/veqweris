@@ -27,10 +27,14 @@ export function MusicPageClient() {
   const [musicItems, setMusicItems] = useState<Release[]>([])
 
   useEffect(() => {
-    const savedUploads = getUploads().filter((item) => item.category === 'music')
-    const uploadedReleases = savedUploads.map(toRelease)
-    const merged = [...uploadedReleases, ...RELEASES]
-    setMusicItems(merged)
+    const loadMusicItems = async () => {
+      const savedUploads = (await getUploads()).filter((item) => item.category === 'music')
+      const uploadedReleases = savedUploads.map(toRelease)
+      const merged = [...uploadedReleases, ...RELEASES]
+      setMusicItems(merged)
+    }
+
+    void loadMusicItems()
   }, [])
 
   const grouped = useMemo(() => {

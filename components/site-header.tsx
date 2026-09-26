@@ -48,9 +48,9 @@ export function SiteHeader() {
   const [searchResults, setSearchResults] = useState<Array<(typeof BASE_SEARCH_ITEMS)[number] & { type: string; description: string }>>([])
 
   useEffect(() => {
-    const syncUploadedSearchItems = () => {
+    const syncUploadedSearchItems = async () => {
       try {
-        const uploadedItems = getUploads().map((item) => ({
+        const uploadedItems = (await getUploads()).map((item) => ({
           label: item.title,
           href: item.href || '/music',
           type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
@@ -62,7 +62,7 @@ export function SiteHeader() {
       }
     }
 
-    syncUploadedSearchItems()
+    void syncUploadedSearchItems()
     window.addEventListener('veqweris-upload-sync', syncUploadedSearchItems)
     window.addEventListener('storage', syncUploadedSearchItems)
 

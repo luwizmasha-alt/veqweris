@@ -93,21 +93,26 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
-    if (!isReady) {
-      return
+    const syncItems = async () => {
+      if (!isReady) {
+        return
+      }
+
+      if (!user) {
+        router.replace('/auth/admin')
+        return
+      }
+
+      if (user.role !== 'admin') {
+        router.replace('/')
+        return
+      }
+
+      const uploadedItems = await getUploads()
+      setItems(uploadedItems)
     }
 
-    if (!user) {
-      router.replace('/auth/admin')
-      return
-    }
-
-    if (user.role !== 'admin') {
-      router.replace('/')
-      return
-    }
-
-    setItems(getUploads())
+    void syncItems()
   }, [isReady, router, user])
 
   const totalPublished = useMemo(
@@ -115,7 +120,7 @@ export default function AdminPage() {
     [items],
   )
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
     const trimmedTitle = form.title.trim()
@@ -139,14 +144,14 @@ export default function AdminPage() {
 
     const nextItems = [nextItem, ...items]
     setItems(nextItems)
-    saveUploads(nextItems)
+    await saveUploads(nextItems)
     setForm(createDefaultItem())
   }
 
-  const handleDeleteItem = (itemId: string) => {
+  const handleDeleteItem = async (itemId: string) => {
     const nextItems = items.filter((item) => item.id !== itemId)
     setItems(nextItems)
-    saveUploads(nextItems)
+    await saveUploads(nextItems)
   }
 
   if (!isReady || !user || user.role !== 'admin') {
