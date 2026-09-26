@@ -4,6 +4,7 @@ import { Reveal } from '@/components/reveal'
 import { SectionHeader } from '@/components/section-header'
 import { MusicCard, PlatformCard } from '@/components/cards'
 import { MediaPlaceholder } from '@/components/media/media-placeholder'
+import { MusicUploadForm } from '@/components/music-upload-form'
 import { RELEASES, MUSIC_PLATFORMS } from '@/lib/content'
 
 export const metadata: Metadata = {
@@ -32,6 +33,21 @@ export default function MusicPage() {
           </Reveal>
           <Reveal delay={120}>
             <MediaPlaceholder kind="music" ratio="wide" label="Featured Release Reserved" />
+          </Reveal>
+        </div>
+      </Section>
+
+      <Section className="border-b border-border">
+        <div className="grid gap-12 lg:grid-cols-[0.8fr_1.2fr] lg:items-start">
+          <Reveal>
+            <SectionHeader
+              eyebrow="Catalog management"
+              title="Upload a track"
+              description="Add audio and release details to prepare a new piece for the VEQWERIS Music catalog."
+            />
+          </Reveal>
+          <Reveal delay={100}>
+            <MusicUploadForm />
           </Reveal>
         </div>
       </Section>
