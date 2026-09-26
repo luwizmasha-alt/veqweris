@@ -64,6 +64,10 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-3">
+          <div className="hidden items-center gap-2 sm:flex">
+            <Link href="/auth" className="rounded-md px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition-colors hover:text-foreground">Sign in</Link>
+            <Link href="/auth" className="rounded-md border border-electric-blue/50 px-3 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-electric-blue transition-colors hover:bg-electric-blue/10">Create account</Link>
+          </div>
           <Link
             href={SYSTEMS_APP_URL}
             className="hidden h-10 items-center rounded-md bg-primary px-5 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)] sm:inline-flex"
