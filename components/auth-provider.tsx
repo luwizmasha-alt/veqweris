@@ -34,18 +34,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    ensureSeededUsers()
+    try {
+      ensureSeededUsers()
 
-    const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY)
-    if (storedUser) {
-      try {
-        setUser(JSON.parse(storedUser) as SiteUser)
-      } catch {
-        window.localStorage.removeItem(AUTH_STORAGE_KEY)
+      const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY)
+      if (storedUser) {
+        try {
+          setUser(JSON.parse(storedUser) as SiteUser)
+        } catch {
+          window.localStorage.removeItem(AUTH_STORAGE_KEY)
+        }
       }
+    } finally {
+      setIsReady(true)
     }
-
-    setIsReady(true)
   }, [])
 
   const login = useCallback((email: string, password: string) => {

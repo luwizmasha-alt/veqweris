@@ -39,11 +39,8 @@ export function SiteHeader() {
   const isAdmin = isAuthenticated && user?.role === 'admin'
   const [uploadedSearchItems, setUploadedSearchItems] = useState<Array<{ label: string; href: string; type: string; description: string }>>([])
   const SEARCH_ITEMS = useMemo(
-    () =>
-      isAdmin
-        ? [...BASE_SEARCH_ITEMS, { label: 'Admin', href: '/admin', type: 'Admin', description: 'Content management area' }, ...uploadedSearchItems]
-        : [...BASE_SEARCH_ITEMS, ...uploadedSearchItems],
-    [isAdmin, uploadedSearchItems],
+    () => [...BASE_SEARCH_ITEMS, ...uploadedSearchItems],
+    [uploadedSearchItems],
   )
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
@@ -214,14 +211,6 @@ export function SiteHeader() {
         <div className="flex items-center gap-2 sm:gap-3">
           {isAuthenticated ? (
             <>
-              {isAdmin && (
-                <Link
-                  href="/admin"
-                  className="hidden h-10 items-center rounded-md border border-border bg-card px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-foreground sm:inline-flex"
-                >
-                  Admin
-                </Link>
-              )}
               {!isAdmin && (
                 <Link
                   href="/"

@@ -38,6 +38,7 @@ export default function AdminPage() {
   const router = useRouter()
   const { user, isReady, logout } = useAuth()
   const [items, setItems] = useState<UploadItem[]>([])
+  const [isAuthorized, setIsAuthorized] = useState(false)
   const [form, setForm] = useState<Omit<UploadItem, 'id' | 'createdAt'>>(createDefaultItem)
 
   const handleImagePick = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,8 +98,23 @@ export default function AdminPage() {
       return
     }
 
+    const verifyAccess = async () => {
+      try {
+        const response = await fetch('/api/admin/me', { cache: 'no-store' })
+        if (!response.ok) {
+          router.replace('/auth/admin')
+          return
+        }
+
+        setIsAuthorized(true)
+        setItems(getUploads())
+      } catch {
+        router.replace('/auth/admin')
+      }
+    }
+
     if (!user) {
-      router.replace('/auth/login')
+      verifyAccess()
       return
     }
 
@@ -107,7 +123,7 @@ export default function AdminPage() {
       return
     }
 
-    setItems(getUploads())
+    verifyAccess()
   }, [isReady, router, user])
 
   const totalPublished = useMemo(
@@ -149,7 +165,7 @@ export default function AdminPage() {
     saveUploads(nextItems)
   }
 
-  if (!isReady || !user || user.role !== 'admin') {
+  if (!isReady || !isAuthorized || !user || user.role !== 'admin') {
     return <div className="mx-auto max-w-3xl px-5 py-28 text-center text-muted-foreground">Checking access…</div>
   }
 
