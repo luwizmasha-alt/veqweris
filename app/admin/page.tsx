@@ -81,8 +81,13 @@ export default function AdminPage() {
       return
     }
 
-    if (!user || user.role !== 'admin') {
+    if (!user) {
       router.replace('/auth/login')
+      return
+    }
+
+    if (user.role !== 'admin') {
+      router.replace('/')
       return
     }
 

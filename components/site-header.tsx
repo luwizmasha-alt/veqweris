@@ -7,12 +7,56 @@ import { useAuth } from '@/components/auth-provider'
 import { NAV_ITEMS, SYSTEMS_APP_URL } from '@/lib/site'
 import { VeqLogo } from '@/components/veq-logo'
 import { cn } from '@/lib/utils'
+import {
+  CAREER_AREAS,
+  CHARACTERS,
+  DIVISIONS,
+  FILMS,
+  GAMES,
+  LAB_INITIATIVES,
+  RELEASES,
+  WORLDS,
+} from '@/lib/content'
+
+const BASE_SEARCH_ITEMS = [
+  ...DIVISIONS.map((item) => ({ label: item.name, href: item.href, type: 'Section', description: item.short })),
+  ...FILMS.map((item) => ({ label: item.title, href: '/studios', type: 'Film', description: item.description })),
+  ...CHARACTERS.map((item) => ({ label: item.name, href: '/studios', type: 'Character', description: item.role })),
+  ...WORLDS.map((item) => ({ label: item.name, href: '/worlds', type: 'World', description: item.premise })),
+  ...RELEASES.map((item) => ({ label: item.title, href: item.href || '/music', type: 'Release', description: item.description })),
+  ...GAMES.map((item) => ({ label: item.title, href: '/gaming', type: 'Game', description: item.description })),
+  ...LAB_INITIATIVES.map((item) => ({ label: item.title, href: '/labs', type: 'Lab', description: item.description })),
+  ...CAREER_AREAS.map((item) => ({ label: item, href: '/careers', type: 'Career', description: 'Career area' })),
+  { label: 'About', href: '/about', type: 'Page', description: 'Company overview' },
+  { label: 'Systems', href: '/systems', type: 'Page', description: 'Operational platform' },
+]
 
 export function SiteHeader() {
   const pathname = usePathname()
   const { isAuthenticated, user, logout } = useAuth()
+  const isAdmin = isAuthenticated && user?.role === 'admin'
+  const SEARCH_ITEMS = isAdmin
+    ? [...BASE_SEARCH_ITEMS, { label: 'Admin', href: '/admin', type: 'Admin', description: 'Content management area' }]
+    : BASE_SEARCH_ITEMS
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [query, setQuery] = useState('')
+  const [searchResults, setSearchResults] = useState<Array<(typeof BASE_SEARCH_ITEMS)[number]>>([])
+
+  useEffect(() => {
+    const normalized = query.trim().toLowerCase()
+    if (!normalized) {
+      setSearchResults([])
+      return
+    }
+
+    const matches = SEARCH_ITEMS.filter((item) => {
+      const haystack = [item.label, item.description ?? '', item.type ?? '', item.href].join(' ').toLowerCase()
+      return haystack.includes(normalized)
+    }).slice(0, 6)
+
+    setSearchResults(matches)
+  }, [query])
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24)
@@ -41,8 +85,60 @@ export function SiteHeader() {
           : 'border-b border-transparent bg-transparent',
       )}
     >
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-5 sm:px-8">
+      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <VeqLogo />
+
+        <div className="hidden flex-1 justify-center lg:flex">
+          <div className="relative w-full max-w-md">
+            <input
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search VEQWERIS"
+              aria-label="Search VEQWERIS pages"
+              className="h-10 w-full rounded-full border border-border bg-card/80 pl-11 pr-4 text-sm text-foreground placeholder:text-muted-foreground focus:border-electric-blue/60 focus:outline-none"
+            />
+            <svg
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+              className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.8"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
+              <circle cx="11" cy="11" r="6" />
+              <path d="M16 16L21 21" />
+            </svg>
+
+            {searchResults.length > 0 && (
+              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-border bg-near-black/95 shadow-[0_20px_40px_rgba(2,5,10,0.55)] backdrop-blur-xl">
+                {searchResults.map((item) => (
+                  <Link
+                    key={`${item.href}-${item.label}`}
+                    href={item.href}
+                    onClick={() => {
+                      setQuery('')
+                      setSearchResults([])
+                    }}
+                    className="block px-4 py-3 text-sm text-foreground transition-colors hover:bg-card"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <span>{item.label}</span>
+                      <span className="font-mono text-[0.56rem] uppercase tracking-[0.18em] text-electric-blue">
+                        {item.type}
+                      </span>
+                    </div>
+                    {item.description && (
+                      <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{item.description}</p>
+                    )}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
 
         <nav className="hidden items-center gap-1 lg:flex" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
@@ -68,12 +164,22 @@ export function SiteHeader() {
         <div className="flex items-center gap-3">
           {isAuthenticated ? (
             <>
-              <Link
-                href={user?.role === 'admin' ? '/admin' : '/'}
-                className="hidden h-10 items-center rounded-md border border-border bg-card px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-foreground sm:inline-flex"
-              >
-                {user?.role === 'admin' ? 'Admin' : 'My account'}
-              </Link>
+              {isAdmin && (
+                <Link
+                  href="/admin"
+                  className="hidden h-10 items-center rounded-md border border-border bg-card px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-foreground sm:inline-flex"
+                >
+                  Admin
+                </Link>
+              )}
+              {!isAdmin && (
+                <Link
+                  href="/"
+                  className="hidden h-10 items-center rounded-md border border-border bg-card px-4 text-[0.68rem] font-semibold uppercase tracking-[0.2em] text-foreground sm:inline-flex"
+                >
+                  My account
+                </Link>
+              )}
               <button
                 type="button"
                 onClick={logout}
