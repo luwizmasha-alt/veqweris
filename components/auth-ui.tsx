@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import { Check, Eye, EyeOff, LoaderCircle, ShieldCheck } from 'lucide-react'
-import { useState, type InputHTMLAttributes, type ReactNode } from 'react'
+import { useEffect, useState, type InputHTMLAttributes, type ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
 export function AuthShell({
@@ -128,4 +128,58 @@ export function AuthNotice({ kind = 'error', children }: { kind?: 'error' | 'suc
     info: 'border-electric-blue/25 bg-electric-blue/[0.06] text-blue-100',
   }
   return <p role={kind === 'error' ? 'alert' : 'status'} className={cn('rounded-lg border px-3.5 py-3 text-xs leading-5', styles[kind])}>{children}</p>
+}
+
+export function SocialAuthButtons() {
+  const [provider, setProvider] = useState<string | null>(null)
+  const [oauthMessage, setOauthMessage] = useState('')
+
+  useEffect(() => {
+    const oauthStatus = new URLSearchParams(window.location.search).get('oauth')
+    if (!oauthStatus) return
+    const messages: Record<string, string> = {
+      google_not_configured: 'Google sign-in needs to be configured by the site administrator.',
+      google_invalid_state: 'Google sign-in expired. Please try again.',
+      google_exchange_failed: 'Google sign-in could not be completed. Please try again.',
+      google_profile_failed: 'Google did not return a verified account profile.',
+      google_unavailable: 'Google sign-in is temporarily unavailable. Please try again later.',
+    }
+    setProvider('Google')
+    setOauthMessage(messages[oauthStatus] ?? 'Google sign-in could not be completed.')
+  }, [])
+
+  return (
+    <div className="space-y-3">
+      <div className="flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground before:h-px before:flex-1 before:bg-white/[0.1] after:h-px after:flex-1 after:bg-white/[0.1]">
+        Or continue with
+      </div>
+      <div className="grid gap-2 sm:grid-cols-2">
+        <button
+          type="button"
+          onClick={() => window.location.assign('/api/auth/google')}
+          className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/[0.1] bg-white/[0.02] text-xs font-medium text-foreground transition duration-200 hover:-translate-y-0.5 hover:border-electric-blue/60 hover:bg-electric-blue/[0.06] focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
+        >
+          <span className="font-semibold text-[#4285f4] transition-transform duration-200 group-hover:scale-110">G</span>
+          Google
+        </button>
+        <button
+          type="button"
+          onClick={() => {
+            setProvider('Microsoft')
+            setOauthMessage('Microsoft sign-in is not configured yet. Connect an Entra ID OAuth provider before enabling this action.')
+          }}
+          className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/[0.1] bg-white/[0.02] text-xs font-medium text-foreground transition duration-200 hover:-translate-y-0.5 hover:border-electric-blue/60 hover:bg-electric-blue/[0.06] focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
+        >
+          <span className="grid h-3.5 w-3.5 grid-cols-2 gap-px transition-transform duration-200 group-hover:rotate-6" aria-hidden="true">
+            <span className="bg-[#f35325]" />
+            <span className="bg-[#81bc06]" />
+            <span className="bg-[#05a6f0]" />
+            <span className="bg-[#ffba08]" />
+          </span>
+          Microsoft
+        </button>
+      </div>
+      {provider ? <AuthNotice kind="info">{oauthMessage || `${provider} sign-in is not configured yet. Connect an OAuth provider before enabling this action.`}</AuthNotice> : null}
+    </div>
+  )
 }

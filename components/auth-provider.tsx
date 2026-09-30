@@ -34,20 +34,33 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isReady, setIsReady] = useState(false)
 
   useEffect(() => {
-    try {
-      ensureSeededUsers()
-
-      const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY)
-      if (storedUser) {
-        try {
-          setUser(JSON.parse(storedUser) as SiteUser)
-        } catch {
-          window.localStorage.removeItem(AUTH_STORAGE_KEY)
+    const restoreSession = async () => {
+      try {
+        const response = await fetch('/api/auth/me', { cache: 'no-store' })
+        if (response.ok) {
+          const result = (await response.json()) as { user?: SiteUser }
+          if (result.user) {
+            setUser(result.user)
+            setIsReady(true)
+            return
+          }
         }
+
+        ensureSeededUsers()
+        const storedUser = window.localStorage.getItem(AUTH_STORAGE_KEY)
+        if (storedUser) {
+          try {
+            setUser(JSON.parse(storedUser) as SiteUser)
+          } catch {
+            window.localStorage.removeItem(AUTH_STORAGE_KEY)
+          }
+        }
+      } finally {
+        setIsReady(true)
       }
-    } finally {
-      setIsReady(true)
     }
+
+    void restoreSession()
   }, [])
 
   const login = useCallback((email: string, password: string): SiteUser | null => {

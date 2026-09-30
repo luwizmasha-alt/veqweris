@@ -22,6 +22,19 @@ pnpm dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+## Google sign-in
+
+Google sign-in uses the server-side OAuth flow at `/api/auth/google`. Add these values to `.env.local` before enabling it:
+
+```text
+GOOGLE_CLIENT_ID=your-google-client-id
+GOOGLE_CLIENT_SECRET=your-google-client-secret
+GOOGLE_REDIRECT_URI=http://localhost:3000/api/auth/google/callback
+AUTH_SESSION_SECRET=use-a-long-random-secret
+```
+
+Register the redirect URI in the Google Cloud OAuth client exactly as shown. Production deployments must use the HTTPS production callback URL. The OAuth callback validates state, exchanges the code server-side, and stores the signed session in an HttpOnly cookie.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More

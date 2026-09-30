@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth-provider'
-import { AuthButton, AuthField, AuthNotice, AuthShell, PasswordField, PasswordRequirements } from '@/components/auth-ui'
+import { AuthButton, AuthField, AuthNotice, AuthShell, PasswordField, PasswordRequirements, SocialAuthButtons } from '@/components/auth-ui'
 
 export default function SignupPage() {
   const router = useRouter()
@@ -75,6 +75,7 @@ export default function SignupPage() {
         {error ? <AuthNotice>{error}</AuthNotice> : null}
         <AuthButton type="submit" loading={loading}>Create account</AuthButton>
       </form>
+      <div className="mt-6"><SocialAuthButtons /></div>
       <p className="mt-6 text-center text-xs text-muted-foreground">Already have an account? <Link href="/auth/login" className="text-foreground hover:text-electric-blue">Sign in</Link></p>
     </AuthShell>
   )

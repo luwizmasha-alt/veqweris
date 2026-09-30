@@ -4,7 +4,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useAuth } from '@/components/auth-provider'
-import { AuthButton, AuthField, AuthNotice, AuthShell, PasswordField } from '@/components/auth-ui'
+import { AuthButton, AuthField, AuthNotice, AuthShell, PasswordField, SocialAuthButtons } from '@/components/auth-ui'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -55,11 +55,7 @@ export default function LoginPage() {
         {error ? <AuthNotice>{error}</AuthNotice> : null}
         <AuthButton type="submit" loading={loading}>Sign in</AuthButton>
       </form>
-      <div className="my-6 flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground before:h-px before:flex-1 before:bg-white/[0.1] after:h-px after:flex-1 after:bg-white/[0.1]">Or</div>
-      <div className="grid gap-2 sm:grid-cols-2">
-        <button type="button" disabled className="h-10 rounded-lg border border-white/[0.1] text-xs font-medium text-muted-foreground opacity-70">Continue with Google</button>
-        <button type="button" disabled className="h-10 rounded-lg border border-white/[0.1] text-xs font-medium text-muted-foreground opacity-70">Continue with Microsoft</button>
-      </div>
+      <div className="mt-6"><SocialAuthButtons /></div>
       <p className="mt-6 text-center text-xs text-muted-foreground">Don&apos;t have an account? <Link href="/auth/signup" className="text-foreground hover:text-electric-blue">Create account</Link></p>
     </AuthShell>
   )
