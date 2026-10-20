@@ -44,9 +44,9 @@ export default function AdminLoginPage() {
   return (
     <main className="mx-auto flex min-h-[calc(100vh-8rem)] max-w-5xl items-center justify-center px-5 py-24 sm:px-8">
       <div className="grid w-full max-w-4xl overflow-hidden rounded-2xl border border-border bg-card shadow-[0_0_30px_rgba(255,193,7,0.08)] lg:grid-cols-[1.1fr_0.9fr]">
-        <div className="flex flex-col justify-between bg-[radial-gradient(circle_at_top,rgba(21,94,239,0.12),transparent_45%),linear-gradient(135deg,#ffffff,#eaf2ff)] p-8 sm:p-10">
+        <div className="flex flex-col justify-between bg-deep-navy p-8 sm:p-10">
           <div>
-            <p className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-primary">
+            <p className="font-mono text-[0.72rem] uppercase tracking-[0.26em] text-electric-blue">
               Restricted access
             </p>
             <h1 className="mt-4 text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
@@ -56,7 +56,7 @@ export default function AdminLoginPage() {
 
           <div className="mt-8 space-y-4 text-sm text-muted-foreground">
             <p>This portal is reserved for authorized VEQWERIS administrators.</p>
-            <div className="rounded-lg border border-electric-blue/25 bg-white/75 p-4">
+            <div className="rounded-lg border border-electric-blue/30 bg-near-black/60 p-4">
               <p className="font-medium text-foreground">Private workspace</p>
               <p className="mt-2">Only the official admin account can continue.</p>
             </div>
@@ -74,7 +74,7 @@ export default function AdminLoginPage() {
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none ring-0 transition focus:border-amber-400"
+                className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none ring-0 transition focus:border-electric-blue"
                 required
               />
             </div>
@@ -88,7 +88,7 @@ export default function AdminLoginPage() {
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none ring-0 transition focus:border-amber-400"
+                className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground outline-none ring-0 transition focus:border-electric-blue"
                 required
               />
             </div>
@@ -101,7 +101,7 @@ export default function AdminLoginPage() {
 
             <button
               type="submit"
-                className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground transition hover:bg-electric-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
+              className="inline-flex w-full items-center justify-center rounded-md bg-primary px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary-foreground transition hover:bg-electric-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
             >
               Enter admin
             </button>

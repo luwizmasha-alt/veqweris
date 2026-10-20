@@ -45,54 +45,42 @@
 }
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  --near-black: #eaf2ff;
-  --deep-navy: #dce9ff;
-  --primary-blue: #124eb8;
-  --electric-blue: #155eef;
-  --cyan: #006b91;
-  --violet: #6542b8;
-  --magenta: #ad287f;
-  --silver: #304866;
+  --near-black: #050816;
+  --deep-navy: #0a1024;
+  --primary-blue: #1769ff;
+  --electric-blue: #1769ff;
+  --cyan: #1769ff;
+  --violet: #1769ff;
+  --magenta: #1769ff;
+  --silver: #d5dbea;
 
-  --background: #eaf2ff;
-  --foreground: #102543;
+  --background: #050816;
+  --foreground: #f5f7ff;
 
-  --card: #ffffff;
-  --card-foreground: #102543;
-  --popover: #ffffff;
-  --popover-foreground: #102543;
+  --card: #0e1830;
+  --card-foreground: #f5f7ff;
+  --popover: #0e1830;
+  --popover-foreground: #f5f7ff;
 
-  --primary: #155eef;
+  --primary: #1769ff;
   --primary-foreground: #ffffff;
-  --secondary: #dceaff;
-  --secondary-foreground: #173c70;
+  --secondary: #0a1024;
+  --secondary-foreground: #d5dbea;
 
-  --muted: #e1edff;
-  --muted-foreground: #526781;
-  --accent: #dceaff;
-  --accent-foreground: #12366b;
+  --muted: #0a1024;
+  --muted-foreground: #a7b2c8;
+  --accent: #00d9ff;
+  --accent-foreground: #050816;
 
   --destructive: oklch(0.577 0.245 27.325);
 
-  --border: rgba(31, 75, 135, 0.17);
-  --input: rgba(31, 75, 135, 0.25);
-  --ring: #155eef;
+  --border: rgba(135, 160, 210, 0.18);
+  --input: rgba(135, 160, 210, 0.24);
+  --ring: #00d9ff;
 
   --radius: 0.5rem;
-}
-
-:root[data-color-theme='white'] {
-  --near-black: #ffffff;
-  --deep-navy: #edf4ff;
-  --background: #ffffff;
-  --card: #f8fbff;
-  --popover: #ffffff;
-  --secondary: #eaf2ff;
-  --muted: #f1f6fd;
-  --border: rgba(31, 75, 135, 0.14);
-  --input: rgba(31, 75, 135, 0.22);
 }
 
 @layer base {
@@ -104,22 +92,13 @@
   }
   body {
     @apply bg-background text-foreground antialiased;
-    background-image:
-      radial-gradient(ellipse at 12% 7%, rgba(21, 94, 239, 0.1), transparent 32%),
-      radial-gradient(ellipse at 90% 28%, rgba(0, 107, 145, 0.07), transparent 28%),
-      linear-gradient(180deg, #eaf2ff 0%, #dfeaff 100%);
+    background-color: #050816;
+    background-image: none;
   }
   ::selection {
-    background: rgba(21, 94, 239, 0.16);
-    color: #102543;
+    background: rgba(23, 105, 255, 0.24);
+    color: #f5f7ff;
   }
-}
-
-html[data-color-theme='white'] body {
-  background-image:
-    radial-gradient(ellipse at 12% 7%, rgba(21, 94, 239, 0.055), transparent 32%),
-    radial-gradient(ellipse at 90% 28%, rgba(0, 107, 145, 0.035), transparent 28%),
-    linear-gradient(180deg, #ffffff 0%, #f7faff 100%);
 }
 
 @layer utilities {
@@ -141,25 +120,13 @@ html[data-color-theme='white'] body {
 /* Cinematic ambient grid used sparingly as background texture */
 .veq-grid {
   background-image:
-    linear-gradient(to right, rgba(21, 94, 239, 0.055) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(21, 94, 239, 0.055) 1px, transparent 1px);
+    linear-gradient(to right, rgba(23, 105, 255, 0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(23, 105, 255, 0.045) 1px, transparent 1px);
   background-size: 64px 64px;
 }
 
 .veq-hero-backdrop {
-  background:
-    radial-gradient(ellipse at 78% 22%, rgba(101, 66, 184, 0.14), transparent 31%),
-    radial-gradient(ellipse at 88% 70%, rgba(173, 40, 127, 0.08), transparent 26%),
-    radial-gradient(ellipse at 54% 48%, rgba(0, 107, 145, 0.1), transparent 35%),
-    linear-gradient(145deg, #ffffff 0%, #eef5ff 58%, #f7f4ff 100%);
-}
-
-html[data-color-theme='white'] .veq-hero-backdrop {
-  background:
-    radial-gradient(ellipse at 78% 22%, rgba(101, 66, 184, 0.09), transparent 31%),
-    radial-gradient(ellipse at 88% 70%, rgba(173, 40, 127, 0.05), transparent 26%),
-    radial-gradient(ellipse at 54% 48%, rgba(0, 107, 145, 0.065), transparent 35%),
-    linear-gradient(145deg, #ffffff 0%, #f7faff 58%, #fbfaff 100%);
+  background-color: #050816;
 }
 
 .veq-panel {
@@ -211,10 +178,10 @@ html[data-color-theme='white'] .veq-hero-backdrop {
 @keyframes veq-pulse-signal {
   0%,
   100% {
-    box-shadow: 0 0 0 0 rgba(0, 217, 255, 0.25);
+    box-shadow: 0 0 0 0 rgba(23, 105, 255, 0.25);
   }
   50% {
-    box-shadow: 0 0 0 10px rgba(0, 217, 255, 0);
+    box-shadow: 0 0 0 10px rgba(23, 105, 255, 0);
   }
 }
 

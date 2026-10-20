@@ -47,7 +47,7 @@ export default function LoginPage() {
         <PasswordField id="password" label="Password" value={password} onChange={(event) => setPassword(event.target.value)} autoComplete="current-password" required />
         <div className="flex items-center justify-between gap-3 text-xs">
           <label className="flex items-center gap-2 text-muted-foreground">
-            <input type="checkbox" className="h-4 w-4 rounded border-border bg-white accent-primary" />
+            <input type="checkbox" className="h-4 w-4 rounded border-white/20 bg-transparent accent-[#1769ff]" />
             Remember me
           </label>
           <Link href="/auth/forgot-password" className="text-electric-blue hover:text-foreground">Forgot password?</Link>

@@ -69,7 +69,7 @@ export default function SignupPage() {
         <PasswordField id="confirm-password" label="Confirm password" value={confirmPassword} onChange={(event) => setConfirmPassword(event.target.value)} autoComplete="new-password" required />
         {confirmPassword && password !== confirmPassword ? <p className="text-xs text-red-300">Passwords do not match.</p> : null}
         <label className="flex items-start gap-2.5 pt-1 text-xs leading-5 text-muted-foreground">
-          <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 rounded border-border bg-white accent-primary" />
+          <input type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-0.5 h-4 w-4 shrink-0 rounded border-white/20 bg-transparent accent-[#1769ff]" />
           <span>I agree to the <Link href="/about" className="text-foreground underline underline-offset-4">Terms of Service</Link> and Privacy Policy.</span>
         </label>
         {error ? <AuthNotice>{error}</AuthNotice> : null}

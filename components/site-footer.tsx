@@ -6,7 +6,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-[linear-gradient(180deg,#edf4ff_0%,#ffffff_100%)]">
+    <footer className="border-t border-border bg-[linear-gradient(180deg,#0a1024_0%,#050816_100%)]">
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
         <div className="flex flex-col gap-12 lg:flex-row lg:justify-between">
           <div className="max-w-sm">

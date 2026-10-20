@@ -96,7 +96,7 @@ function PlaceholderTreatment({
         className="absolute inset-0"
         style={{
           background:
-            'radial-gradient(120% 80% at 50% -10%, rgba(21,94,239,0.12), transparent 60%), linear-gradient(160deg, #ffffff 0%, #eaf2ff 100%)',
+            'radial-gradient(120% 80% at 50% -10%, rgba(45,140,255,0.14), transparent 60%), linear-gradient(160deg, #061326 0%, #02050a 100%)',
         }}
       />
       <div className="veq-grid absolute inset-0 opacity-40" />
@@ -110,7 +110,7 @@ function PlaceholderTreatment({
         {showPlay && (
           <span className="flex h-11 w-11 items-center justify-center rounded-full border border-electric-blue/50 bg-background/40 backdrop-blur-sm">
             <svg width="14" height="16" viewBox="0 0 14 16" fill="none" aria-hidden="true">
-              <path d="M1 1.5v13l12-6.5L1 1.5Z" fill="#155EEF" />
+              <path d="M1 1.5v13l12-6.5L1 1.5Z" fill="#2D8CFF" />
             </svg>
           </span>
         )}

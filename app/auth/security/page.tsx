@@ -15,7 +15,7 @@ export default function SecurityPage() {
     <AuthShell eyebrow="Account controls" title="Security" description="Manage the controls that protect your VEQWERIS account.">
       <div className="space-y-3">
         {sections.map(({ icon: Icon, title, detail, action, href }) => (
-          <div key={title} className="rounded-lg border border-border bg-card p-4">
+          <div key={title} className="rounded-lg border border-white/[0.09] bg-white/[0.02] p-4">
             <div className="flex gap-3">
               <Icon className="mt-0.5 h-4 w-4 shrink-0 text-electric-blue" aria-hidden="true" />
               <div className="min-w-0">

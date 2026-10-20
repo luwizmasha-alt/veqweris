@@ -36,8 +36,7 @@ export function PageHero({
       <div
         className="absolute inset-0 -z-10"
         style={{
-          background:
-            'radial-gradient(80% 60% at 50% 0%, rgba(0,107,145,0.06), transparent 38%), radial-gradient(80% 60% at 50% 20%, rgba(101,66,184,0.1), transparent 60%), linear-gradient(180deg, #ffffff 0%, #f0f5ff 100%)',
+          background: '#0a1024',
         }}
       />
       <div className="veq-grid absolute inset-0 -z-10 opacity-30" />

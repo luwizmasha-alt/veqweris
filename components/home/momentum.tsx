@@ -47,9 +47,9 @@ export function Momentum() {
           </Reveal>
 
           <Reveal delay={180}>
-            <article className="group flex h-full min-h-[320px] flex-col justify-between overflow-hidden rounded-xl border border-border bg-[linear-gradient(145deg,rgba(101,66,184,0.07),#ffffff_52%)] p-6 transition duration-300 hover:border-magenta/40 sm:p-7">
+            <article className="group flex h-full min-h-[320px] flex-col justify-between overflow-hidden rounded-xl border border-border bg-card p-6 transition duration-300 hover:border-electric-blue/45 sm:p-7">
               <div>
-                <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-magenta">VEQWERIS Music · Published</span>
+                <span className="font-mono text-[0.65rem] uppercase tracking-[0.18em] text-electric-blue">VEQWERIS Music · Published</span>
                 <div className="mt-5 flex items-start gap-4">
                   {publishedRelease?.image && (
                     <Image

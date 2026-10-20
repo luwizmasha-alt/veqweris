@@ -6,6 +6,7 @@ type VeqLogoProps = {
   className?: string
   /** show the VEQWERIS wordmark next to the emblem */
   showWordmark?: boolean
+  wordmarkClassName?: string
   size?: number
   href?: string | null
 }
@@ -13,6 +14,7 @@ type VeqLogoProps = {
 export function VeqLogo({
   className,
   showWordmark = true,
+  wordmarkClassName,
   size = 34,
   href = '/',
 }: VeqLogoProps) {
@@ -28,7 +30,7 @@ export function VeqLogo({
         style={{ width: size, height: size, objectFit: 'contain' }}
       />
       {showWordmark && (
-        <span className="font-sans text-[0.9rem] font-semibold tracking-[0.26em] text-foreground sm:text-[0.95rem]">
+        <span className={cn('font-sans text-[0.9rem] font-semibold tracking-[0.26em] text-foreground sm:text-[0.95rem]', wordmarkClassName)}>
           VEQWERIS
         </span>
       )}

@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Palette, Search } from 'lucide-react'
+import { Search } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth-provider'
@@ -45,19 +45,8 @@ export function SiteHeader() {
   )
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
-  const [colorTheme, setColorTheme] = useState<'blue' | 'white'>('blue')
   const [query, setQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<(typeof BASE_SEARCH_ITEMS)[number] & { type: string; description: string }>>([])
-
-  useEffect(() => {
-    const savedTheme = window.localStorage.getItem('veqweris-color-theme')
-    if (savedTheme === 'white') {
-      document.documentElement.dataset.colorTheme = 'white'
-      setColorTheme('white')
-    } else {
-      document.documentElement.dataset.colorTheme = 'blue'
-    }
-  }, [])
 
   useEffect(() => {
     const syncUploadedSearchItems = async () => {
@@ -125,24 +114,15 @@ export function SiteHeader() {
     setOpen(false)
   }
 
-  const toggleColorTheme = () => {
-    const nextTheme = colorTheme === 'blue' ? 'white' : 'blue'
-    document.documentElement.dataset.colorTheme = nextTheme
-    window.localStorage.setItem('veqweris-color-theme', nextTheme)
-    setColorTheme(nextTheme)
-  }
-
   return (
     <header
       className={cn(
-        'fixed inset-x-0 top-0 z-50 transition-colors duration-500',
-        scrolled || open
-          ? 'border-b border-border bg-near-black/85 backdrop-blur-xl'
-          : 'border-b border-transparent bg-transparent',
+        'fixed inset-x-0 top-0 z-50 border-b border-slate-200 bg-white shadow-[0_2px_12px_rgba(16,37,67,0.06)] transition-colors duration-300',
+        (scrolled || open) && 'shadow-[0_4px_18px_rgba(16,37,67,0.1)]',
       )}
     >
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
-        <VeqLogo />
+        <VeqLogo wordmarkClassName="text-slate-950" />
 
         <nav className="hidden flex-1 items-center justify-center gap-0.5 lg:flex" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
@@ -154,7 +134,7 @@ export function SiteHeader() {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'relative rounded-md px-1.5 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.1em] transition-colors 2xl:px-2 2xl:text-[0.67rem]',
-                  active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
+                  active ? 'text-slate-950' : 'text-slate-600 hover:text-slate-950',
                   'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan',
                 )}
               >
@@ -169,8 +149,8 @@ export function SiteHeader() {
 
         <div className="flex items-center gap-2 sm:gap-3">
           <form onSubmit={handleSearchSubmit} className="relative hidden w-[190px] 2xl:w-[220px] xl:block">
-            <div className="flex items-center overflow-hidden rounded-md border border-border bg-card/85 transition focus-within:border-cyan/60 focus-within:ring-2 focus-within:ring-cyan/15">
-              <span className="flex h-10 items-center pl-3 text-muted-foreground">
+            <div className="flex items-center overflow-hidden rounded-md border border-slate-300 bg-white transition focus-within:border-electric-blue focus-within:ring-2 focus-within:ring-electric-blue/15">
+              <span className="flex h-10 items-center pl-3 text-slate-500">
                 <Search aria-hidden="true" className="h-4 w-4" />
               </span>
               <input
@@ -179,7 +159,7 @@ export function SiteHeader() {
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Search"
                 aria-label="Search VEQWERIS pages"
-                className="h-10 w-full border-0 bg-transparent px-2 text-[0.72rem] uppercase tracking-[0.14em] text-foreground placeholder:text-muted-foreground focus:outline-none"
+                className="h-10 w-full border-0 bg-transparent px-2 text-[0.72rem] uppercase tracking-[0.14em] text-slate-950 placeholder:text-slate-500 focus:outline-none"
               />
               <button
                 type="submit"
@@ -190,7 +170,7 @@ export function SiteHeader() {
             </div>
 
             {searchResults.length > 0 && (
-              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-border bg-card/95 shadow-[0_16px_40px_rgba(16,37,67,0.14)] backdrop-blur-xl">
+              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_16px_36px_rgba(16,37,67,0.14)]">
                 {searchResults.map((item) => (
                   <Link
                     key={`${item.href}-${item.label}`}
@@ -199,7 +179,7 @@ export function SiteHeader() {
                       setQuery('')
                       setSearchResults([])
                     }}
-                    className="block px-4 py-3 text-sm text-foreground transition-colors hover:bg-card"
+                    className="block px-4 py-3 text-sm text-slate-950 transition-colors hover:bg-blue-50"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <span>{item.label}</span>
@@ -208,7 +188,7 @@ export function SiteHeader() {
                       </span>
                     </div>
                     {item.description && (
-                      <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{item.description}</p>
+                      <p className="mt-1 line-clamp-2 text-xs text-slate-600">{item.description}</p>
                     )}
                   </Link>
                 ))}
@@ -218,22 +198,12 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <button
-            type="button"
-            onClick={toggleColorTheme}
-            aria-label={`Switch to ${colorTheme === 'blue' ? 'white' : 'blue'} theme`}
-            aria-pressed={colorTheme === 'white'}
-            title={`Switch to ${colorTheme === 'blue' ? 'white' : 'blue'} theme`}
-            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-card text-primary transition hover:border-electric-blue/50 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
-          >
-            <Palette aria-hidden="true" className="h-4 w-4" />
-          </button>
           {isAuthenticated ? (
             <>
               {!isAdmin && (
                 <Link
                   href="/auth/security"
-                  className="hidden h-9 items-center rounded-md border border-border bg-card px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-foreground transition hover:border-cyan/50 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+                  className="hidden h-9 items-center rounded-md border border-slate-300 bg-white px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-900 transition hover:border-electric-blue/60 hover:bg-blue-50 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
                 >
                   Security
                 </Link>
@@ -241,7 +211,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={logout}
-                className="hidden h-9 items-center rounded-md border border-border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition hover:text-foreground sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+                className="hidden h-9 items-center rounded-md border border-slate-300 px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-600 transition hover:border-electric-blue/60 hover:text-slate-950 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
               >
                 Log out
               </button>
@@ -250,7 +220,7 @@ export function SiteHeader() {
             <>
               <Link
                 href="/auth/login"
-                className="hidden h-9 items-center rounded-md border border-border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-foreground transition hover:border-cyan/50 hover:bg-card sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
+                className="hidden h-9 items-center rounded-md border border-slate-300 px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-slate-900 transition hover:border-electric-blue/60 hover:bg-blue-50 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
               >
                 Log in
               </Link>
@@ -276,7 +246,7 @@ export function SiteHeader() {
             aria-expanded={open}
             aria-controls="mobile-navigation"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition hover:border-cyan/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-slate-300 text-slate-900 transition hover:border-electric-blue/60 hover:bg-blue-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue lg:hidden"
           >
             <span className="relative flex h-4 w-5 flex-col justify-between">
               <span
@@ -305,7 +275,7 @@ export function SiteHeader() {
       {/* Mobile menu */}
       <div
         className={cn(
-          'border-border bg-card/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 lg:hidden',
+          'border-slate-200 bg-white transition-[max-height,opacity] duration-500 lg:hidden',
           open ? 'max-h-[calc(100dvh-72px)] overflow-y-auto border-t opacity-100' : 'max-h-0 overflow-hidden opacity-0',
         )}
         id="mobile-navigation"
@@ -320,7 +290,7 @@ export function SiteHeader() {
                 aria-current={active ? 'page' : undefined}
                 className={cn(
                   'rounded-md px-3 py-3 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan',
-                  active ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:text-foreground',
+                  active ? 'bg-blue-50 text-slate-950' : 'text-slate-600 hover:bg-blue-50 hover:text-slate-950',
                 )}
               >
                 {item.label}
@@ -335,7 +305,7 @@ export function SiteHeader() {
               value={query}
               onChange={(event) => setQuery(event.target.value)}
               placeholder="Search VEQWERIS"
-              className="h-11 min-w-0 flex-1 rounded-md border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/20"
+              className="h-11 min-w-0 flex-1 rounded-md border border-slate-300 bg-white px-3 text-sm text-slate-950 placeholder:text-slate-500 focus:border-electric-blue focus:outline-none focus:ring-2 focus:ring-electric-blue/20"
             />
             <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-4 text-xs font-semibold uppercase tracking-[0.12em] text-primary-foreground transition hover:bg-electric-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan">
               <Search aria-hidden="true" className="h-4 w-4" />
@@ -346,14 +316,14 @@ export function SiteHeader() {
             <>
               <Link
                 href={user?.role === 'admin' ? '/admin' : '/auth/security'}
-                className="mt-4 inline-flex h-12 items-center justify-center rounded-md border border-border bg-card text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-foreground"
+                className="mt-4 inline-flex h-12 items-center justify-center rounded-md border border-slate-300 bg-white text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-900"
               >
                 {user?.role === 'admin' ? 'Admin panel' : 'Security'}
               </Link>
               <button
                 type="button"
                 onClick={logout}
-                className="mt-2 inline-flex h-12 items-center justify-center rounded-md border border-border text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-muted-foreground"
+                className="mt-2 inline-flex h-12 items-center justify-center rounded-md border border-slate-300 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-600"
               >
                 Log out
               </button>
@@ -362,7 +332,7 @@ export function SiteHeader() {
             <>
               <Link
                 href="/auth/login"
-                className="mt-4 inline-flex h-12 items-center justify-center rounded-md border border-border text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-foreground"
+                className="mt-4 inline-flex h-12 items-center justify-center rounded-md border border-slate-300 text-[0.72rem] font-semibold uppercase tracking-[0.2em] text-slate-900"
               >
                 Log in
               </Link>

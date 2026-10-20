@@ -106,7 +106,7 @@ export default function SystemsPage() {
           className="absolute inset-0 -z-10"
           style={{
             background:
-              'radial-gradient(70% 60% at 50% 120%, rgba(21,94,239,0.13), transparent 60%), linear-gradient(180deg, #ffffff, #edf4ff)',
+              'radial-gradient(70% 60% at 50% 120%, rgba(11,92,255,0.2), transparent 60%), linear-gradient(180deg, #02050a, #061326)',
           }}
         />
         <div className="mx-auto max-w-4xl px-5 py-28 text-center sm:px-8">
