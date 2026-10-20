@@ -13,10 +13,10 @@ const sizes = {
 
 const variants = {
   primary:
-    'bg-primary text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)]',
+    'bg-primary text-primary-foreground shadow-[0_4px_14px_rgba(21,94,239,0.2)] hover:bg-electric-blue hover:shadow-[0_7px_22px_rgba(21,94,239,0.28)]',
   secondary:
-    'border border-border bg-transparent text-foreground hover:border-electric-blue/60 hover:bg-secondary hover:text-foreground',
-  ghost: 'text-muted-foreground hover:text-foreground',
+    'border border-border bg-card text-foreground hover:border-electric-blue/60 hover:bg-secondary hover:text-foreground',
+  ghost: 'text-muted-foreground hover:text-primary',
 } as const
 
 type Variant = keyof typeof variants

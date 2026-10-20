@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Search } from 'lucide-react'
+import { Palette, Search } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth-provider'
@@ -45,8 +45,19 @@ export function SiteHeader() {
   )
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const [colorTheme, setColorTheme] = useState<'blue' | 'white'>('blue')
   const [query, setQuery] = useState('')
   const [searchResults, setSearchResults] = useState<Array<(typeof BASE_SEARCH_ITEMS)[number] & { type: string; description: string }>>([])
+
+  useEffect(() => {
+    const savedTheme = window.localStorage.getItem('veqweris-color-theme')
+    if (savedTheme === 'white') {
+      document.documentElement.dataset.colorTheme = 'white'
+      setColorTheme('white')
+    } else {
+      document.documentElement.dataset.colorTheme = 'blue'
+    }
+  }, [])
 
   useEffect(() => {
     const syncUploadedSearchItems = async () => {
@@ -114,6 +125,13 @@ export function SiteHeader() {
     setOpen(false)
   }
 
+  const toggleColorTheme = () => {
+    const nextTheme = colorTheme === 'blue' ? 'white' : 'blue'
+    document.documentElement.dataset.colorTheme = nextTheme
+    window.localStorage.setItem('veqweris-color-theme', nextTheme)
+    setColorTheme(nextTheme)
+  }
+
   return (
     <header
       className={cn(
@@ -172,7 +190,7 @@ export function SiteHeader() {
             </div>
 
             {searchResults.length > 0 && (
-              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-border bg-near-black/95 shadow-[0_20px_40px_rgba(2,5,10,0.55)] backdrop-blur-xl">
+              <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-border bg-card/95 shadow-[0_16px_40px_rgba(16,37,67,0.14)] backdrop-blur-xl">
                 {searchResults.map((item) => (
                   <Link
                     key={`${item.href}-${item.label}`}
@@ -200,6 +218,16 @@ export function SiteHeader() {
         </div>
 
         <div className="flex items-center gap-2 sm:gap-3">
+          <button
+            type="button"
+            onClick={toggleColorTheme}
+            aria-label={`Switch to ${colorTheme === 'blue' ? 'white' : 'blue'} theme`}
+            aria-pressed={colorTheme === 'white'}
+            title={`Switch to ${colorTheme === 'blue' ? 'white' : 'blue'} theme`}
+            className="inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-border bg-card text-primary transition hover:border-electric-blue/50 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
+          >
+            <Palette aria-hidden="true" className="h-4 w-4" />
+          </button>
           {isAuthenticated ? (
             <>
               {!isAdmin && (
@@ -277,7 +305,7 @@ export function SiteHeader() {
       {/* Mobile menu */}
       <div
         className={cn(
-          'border-border bg-near-black/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 lg:hidden',
+          'border-border bg-card/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 lg:hidden',
           open ? 'max-h-[calc(100dvh-72px)] overflow-y-auto border-t opacity-100' : 'max-h-0 overflow-hidden opacity-0',
         )}
         id="mobile-navigation"

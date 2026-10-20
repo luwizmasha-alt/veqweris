@@ -266,16 +266,16 @@ export function NeonDriftGame() {
           <p className="text-xs font-semibold uppercase tracking-[0.45em] text-electric-blue/80">
             VEQWERIS // arcade
           </p>
-          <h1 className="mt-4 text-4xl font-black tracking-tight text-white md:text-6xl">
+          <h1 className="mt-4 text-4xl font-black tracking-tight text-foreground md:text-6xl">
             Neon Drift
           </h1>
-          <p className="mx-auto mt-3 max-w-2xl text-sm text-slate-300 md:text-base">
+          <p className="mx-auto mt-3 max-w-2xl text-sm text-muted-foreground md:text-base">
             Dodge incoming drones and collect energy cores to keep your run alive.
           </p>
         </div>
 
         <div className="grid items-start gap-8 lg:grid-cols-[1fr_420px]">
-          <div className="space-y-5 rounded-3xl border border-white/10 bg-white/5 p-6 shadow-[0_0_40px_rgba(45,140,255,0.08)] backdrop-blur-sm">
+          <div className="space-y-5 rounded-3xl border border-border bg-card p-6 shadow-[0_12px_36px_rgba(16,37,67,0.08)]">
             <div className="flex flex-wrap gap-3">
               <VeqButton onClick={startGame} variant="primary" className="min-w-[150px]">
                 {game.status === 'ready' ? 'Start game' : game.status === 'gameover' ? 'Play again' : 'Restart'}
@@ -289,22 +289,22 @@ export function NeonDriftGame() {
             </div>
 
             <div className="grid gap-4 sm:grid-cols-3">
-              <div className="rounded-2xl border border-sky-500/30 bg-slate-950/70 p-4">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400">Score</p>
+              <div className="rounded-2xl border border-border bg-muted p-4">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Score</p>
                 <p className="mt-2 text-3xl font-black text-electric-blue">{game.score}</p>
               </div>
-              <div className="rounded-2xl border border-sky-500/30 bg-slate-950/70 p-4">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400">Lives</p>
-                <p className="mt-2 text-3xl font-black text-amber-400">{game.lives}</p>
+              <div className="rounded-2xl border border-border bg-muted p-4">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Lives</p>
+                <p className="mt-2 text-3xl font-black text-primary">{game.lives}</p>
               </div>
-              <div className="rounded-2xl border border-sky-500/30 bg-slate-950/70 p-4">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-slate-400">Status</p>
-                <p className="mt-2 text-lg font-bold text-white">{game.status === 'ready' ? 'Ready' : game.status === 'playing' ? 'Live' : 'Crashed'}</p>
+              <div className="rounded-2xl border border-border bg-muted p-4">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-muted-foreground">Status</p>
+                <p className="mt-2 text-lg font-bold text-foreground">{game.status === 'ready' ? 'Ready' : game.status === 'playing' ? 'Live' : 'Crashed'}</p>
               </div>
             </div>
 
-            <div className="rounded-2xl border border-sky-500/20 bg-slate-950/60 p-5 text-sm text-slate-300">
-              <h2 className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-slate-400">
+            <div className="rounded-2xl border border-border bg-muted p-5 text-sm text-muted-foreground">
+              <h2 className="mb-2 text-xs font-semibold uppercase tracking-[0.35em] text-foreground">
                 How to play
               </h2>
               <ul className="space-y-2">
@@ -318,7 +318,7 @@ export function NeonDriftGame() {
               <button
                 type="button"
                 aria-label="Move left"
-                className="flex-1 rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm font-semibold text-white transition hover:border-electric-blue/60 hover:bg-slate-800"
+                className="flex-1 rounded-2xl border border-border bg-white px-4 py-3 text-sm font-semibold text-foreground transition hover:border-electric-blue/60 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
                 onMouseDown={() => setKeyState('left', true)}
                 onMouseUp={() => setKeyState('left', false)}
                 onMouseLeave={() => setKeyState('left', false)}
@@ -328,7 +328,7 @@ export function NeonDriftGame() {
               <button
                 type="button"
                 aria-label="Move right"
-                className="flex-1 rounded-2xl border border-white/10 bg-slate-900/80 px-4 py-3 text-sm font-semibold text-white transition hover:border-electric-blue/60 hover:bg-slate-800"
+                className="flex-1 rounded-2xl border border-border bg-white px-4 py-3 text-sm font-semibold text-foreground transition hover:border-electric-blue/60 hover:bg-secondary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electric-blue"
                 onMouseDown={() => setKeyState('right', true)}
                 onMouseUp={() => setKeyState('right', false)}
                 onMouseLeave={() => setKeyState('right', false)}
@@ -338,8 +338,8 @@ export function NeonDriftGame() {
             </div>
           </div>
 
-          <div className="rounded-[28px] border border-electric-blue/30 bg-[#020d1a] p-3 shadow-[0_0_40px_rgba(45,140,255,0.2)]">
-            <div className="mb-3 flex items-center justify-between px-2 text-[10px] uppercase tracking-[0.4em] text-slate-400">
+          <div className="rounded-[28px] border border-border bg-card p-3 shadow-[0_12px_36px_rgba(16,37,67,0.12)]">
+            <div className="mb-3 flex items-center justify-between px-2 text-[10px] uppercase tracking-[0.4em] text-muted-foreground">
               <span>Zone 07</span>
               <span>{inGame ? 'Active' : 'Standby'}</span>
             </div>
@@ -397,15 +397,15 @@ export function NeonDriftGame() {
               />
 
               {game.status !== 'playing' && (
-                <div className="absolute inset-0 flex items-center justify-center bg-slate-950/65 backdrop-blur-[2px]">
-                  <div className="rounded-3xl border border-white/10 bg-slate-950/85 p-6 text-center shadow-[0_0_30px_rgba(45,140,255,0.25)]">
+                <div className="absolute inset-0 flex items-center justify-center bg-white/75 backdrop-blur-[2px]">
+                  <div className="rounded-3xl border border-electric-blue/20 bg-white/95 p-6 text-center shadow-[0_12px_32px_rgba(16,37,67,0.18)]">
                     <p className="text-[10px] uppercase tracking-[0.45em] text-electric-blue">
                       {game.status === 'ready' ? 'Ready' : 'Game over'}
                     </p>
-                    <h3 className="mt-3 text-3xl font-black text-white">
+                    <h3 className="mt-3 text-3xl font-black text-foreground">
                       {game.status === 'ready' ? 'Launch sequence' : 'System failure'}
                     </h3>
-                    <p className="mt-2 text-sm text-slate-300">
+                    <p className="mt-2 text-sm text-muted-foreground">
                       {game.status === 'ready'
                         ? 'Press start and survive the incoming swarm.'
                         : `Final score: ${game.score}. Hit start to retry.`}

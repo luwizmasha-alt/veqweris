@@ -69,7 +69,7 @@ export function BackgroundVideo({
             className="h-full w-full"
             style={{
               background:
-                'radial-gradient(80% 60% at 50% 30%, rgba(0,217,255,0.12), transparent 60%), radial-gradient(70% 50% at 78% 60%, rgba(121,87,255,0.12), transparent 65%), linear-gradient(180deg, #0a1024, #050816)',
+                'radial-gradient(80% 60% at 50% 30%, rgba(0,107,145,0.1), transparent 60%), radial-gradient(70% 50% at 78% 60%, rgba(101,66,184,0.1), transparent 65%), linear-gradient(180deg, #ffffff, #edf4ff)',
             }}
           />
         ))
@@ -79,7 +79,7 @@ export function BackgroundVideo({
       <div
         className="absolute inset-0"
         style={{
-          background: `linear-gradient(180deg, rgba(5,8,22,${overlay / 100 + 0.1}) 0%, rgba(5,8,22,${overlay / 100}) 45%, rgba(5,8,22,0.92) 100%)`,
+          background: `linear-gradient(180deg, rgba(246,249,255,${overlay / 100 + 0.1}) 0%, rgba(246,249,255,${overlay / 100}) 45%, rgba(246,249,255,0.92) 100%)`,
         }}
       />
     </div>

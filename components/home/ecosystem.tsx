@@ -19,11 +19,11 @@ function ArrowLink({ label }: { label: string }) {
 
 const divisionVisuals = {
   systems: { Icon: Cpu, tone: 'text-electric-blue', wash: 'bg-electric-blue/10', line: 'hover:border-electric-blue/45' },
-  studios: { Icon: Clapperboard, tone: 'text-violet-300', wash: 'bg-violet/10', line: 'hover:border-violet/45' },
+  studios: { Icon: Clapperboard, tone: 'text-violet', wash: 'bg-violet/10', line: 'hover:border-violet/45' },
   worlds: { Icon: Globe2, tone: 'text-cyan', wash: 'bg-cyan/10', line: 'hover:border-cyan/45' },
-  music: { Icon: Music2, tone: 'text-fuchsia-300', wash: 'bg-magenta/10', line: 'hover:border-magenta/45' },
-  gaming: { Icon: Gamepad2, tone: 'text-blue-300', wash: 'bg-violet/10', line: 'hover:border-violet/45' },
-  labs: { Icon: FlaskConical, tone: 'text-cyan-200', wash: 'bg-cyan/10', line: 'hover:border-cyan/45' },
+  music: { Icon: Music2, tone: 'text-magenta', wash: 'bg-magenta/10', line: 'hover:border-magenta/45' },
+  gaming: { Icon: Gamepad2, tone: 'text-primary-blue', wash: 'bg-violet/10', line: 'hover:border-violet/45' },
+  labs: { Icon: FlaskConical, tone: 'text-cyan', wash: 'bg-cyan/10', line: 'hover:border-cyan/45' },
 }
 
 export function Ecosystem() {
@@ -63,7 +63,7 @@ export function Ecosystem() {
                 'h-9 rounded-md border px-3 text-[0.68rem] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-electric-blue/40',
                 category === item.label
                   ? 'border-electric-blue/50 bg-electric-blue/10 text-foreground'
-                  : 'border-border text-muted-foreground hover:border-white/20 hover:text-foreground',
+                  : 'border-border text-muted-foreground hover:border-electric-blue/40 hover:text-foreground',
               )}
             >
               {item.label}

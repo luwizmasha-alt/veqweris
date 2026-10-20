@@ -81,7 +81,7 @@ export function WorldCard({ world }: { world: World }) {
 export function MusicCard({ release }: { release: Release }) {
   const content = (
     <>
-      <div className="relative overflow-hidden rounded-xl border border-white/10 bg-[#081827]">
+      <div className="relative overflow-hidden rounded-xl border border-border bg-muted">
         <MediaPlaceholder
           kind="music"
           ratio="square"
@@ -115,7 +115,7 @@ export function MusicCard({ release }: { release: Release }) {
         href={release.href}
         target={release.href.startsWith('http') ? '_blank' : undefined}
         rel={release.href.startsWith('http') ? 'noopener noreferrer' : undefined}
-        className="group block rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(8,22,38,0.98),rgba(5,12,20,0.96))] p-2.5 shadow-[0_12px_40px_rgba(2,5,10,0.52)] transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/60 hover:shadow-[0_20px_50px_rgba(45,140,255,0.18)]"
+        className="group block rounded-2xl border border-border bg-card p-2.5 shadow-[0_10px_28px_rgba(16,37,67,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/60 hover:shadow-[0_16px_36px_rgba(21,94,239,0.14)]"
       >
         {content}
       </a>
@@ -123,7 +123,7 @@ export function MusicCard({ release }: { release: Release }) {
   }
 
   return (
-    <article className="group flex flex-col rounded-2xl border border-white/10 bg-[linear-gradient(180deg,rgba(8,22,38,0.98),rgba(5,12,20,0.96))] p-2.5 shadow-[0_12px_40px_rgba(2,5,10,0.52)] transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/60 hover:shadow-[0_20px_50px_rgba(45,140,255,0.18)]">
+    <article className="group flex flex-col rounded-2xl border border-border bg-card p-2.5 shadow-[0_10px_28px_rgba(16,37,67,0.08)] transition-all duration-300 hover:-translate-y-1 hover:border-electric-blue/60 hover:shadow-[0_16px_36px_rgba(21,94,239,0.14)]">
       {content}
     </article>
   )

@@ -22,7 +22,7 @@ export function Vision() {
       </Section>
 
       <section className="relative overflow-hidden">
-        <div className="absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_85%_100%,rgba(121,87,255,0.24),transparent_58%),radial-gradient(45%_60%_at_12%_0%,rgba(23,105,255,0.18),transparent_62%),linear-gradient(145deg,#0a1024,#050816_72%)]" />
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_85%_100%,rgba(101,66,184,0.11),transparent_58%),radial-gradient(45%_60%_at_12%_0%,rgba(21,94,239,0.11),transparent_62%),linear-gradient(145deg,#ffffff,#edf4ff_72%)]" />
         <div className="veq-grid absolute inset-0 -z-10 opacity-20" />
         <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
           <Reveal>

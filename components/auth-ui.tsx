@@ -20,13 +20,13 @@ export function AuthShell({
 }) {
   return (
     <main className="relative isolate flex min-h-[calc(100vh-72px)] items-center justify-center overflow-hidden px-5 py-16 sm:px-8 sm:py-20">
-      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_15%,rgba(23,105,255,0.16),transparent_34%),linear-gradient(180deg,rgba(2,7,18,0.2),rgba(2,7,18,0.9))]" />
+      <div className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(circle_at_50%_15%,rgba(21,94,239,0.1),transparent_34%),linear-gradient(180deg,rgba(255,255,255,0.5),rgba(237,244,255,0.88))]" />
       <div className="w-full max-w-[440px] animate-[veq-reveal-up_500ms_ease-out_both]">
         <div className="mb-8 flex items-center justify-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.28em] text-muted-foreground">
           <ShieldCheck className="h-4 w-4 text-electric-blue" aria-hidden="true" />
           VEQWERIS SYSTEMS
         </div>
-        <section className="rounded-xl border border-white/[0.1] bg-[#08111f]/90 p-6 shadow-[0_18px_70px_rgba(0,0,0,0.32),0_0_35px_rgba(23,105,255,0.06)] backdrop-blur-xl sm:p-8">
+        <section className="rounded-xl border border-border bg-card/95 p-6 shadow-[0_18px_55px_rgba(16,37,67,0.12)] backdrop-blur-xl sm:p-8">
           <header className="mb-7">
             <p className="font-mono text-[0.66rem] uppercase tracking-[0.24em] text-electric-blue">{eyebrow}</p>
             <h1 className="mt-3 text-[1.7rem] font-semibold tracking-[-0.02em] text-foreground">{title}</h1>
@@ -37,7 +37,7 @@ export function AuthShell({
         {aside ? (
           <p className="mt-5 text-center text-xs leading-5 text-muted-foreground">
             Protected access to VEQWERIS systems.{' '}
-            <Link href="/about" className="text-foreground underline decoration-white/20 underline-offset-4 hover:decoration-electric-blue">
+            <Link href="/about" className="text-foreground underline decoration-border underline-offset-4 hover:decoration-electric-blue">
               Learn about VEQWERIS
             </Link>
           </p>
@@ -53,7 +53,7 @@ export function AuthField({ label, className, ...props }: InputHTMLAttributes<HT
       <span className="text-xs font-medium text-foreground">{label}</span>
       <input
         {...props}
-        className="h-11 w-full rounded-lg border border-white/[0.12] bg-[#050b16] px-3.5 text-sm text-foreground outline-none transition placeholder:text-slate-600 focus:border-electric-blue focus:ring-2 focus:ring-electric-blue/15"
+        className="h-11 w-full rounded-lg border border-input bg-white px-3.5 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-electric-blue focus:ring-2 focus:ring-electric-blue/15"
       />
     </label>
   )
@@ -69,13 +69,13 @@ export function PasswordField({ label, ...props }: InputHTMLAttributes<HTMLInput
         <input
           {...props}
           type={visible ? 'text' : 'password'}
-          className="h-11 w-full rounded-lg border border-white/[0.12] bg-[#050b16] px-3.5 pr-11 text-sm text-foreground outline-none transition placeholder:text-slate-600 focus:border-electric-blue focus:ring-2 focus:ring-electric-blue/15"
+          className="h-11 w-full rounded-lg border border-input bg-white px-3.5 pr-11 text-sm text-foreground outline-none transition placeholder:text-muted-foreground/70 focus:border-electric-blue focus:ring-2 focus:ring-electric-blue/15"
         />
         <button
           type="button"
           onClick={() => setVisible((current) => !current)}
           aria-label={visible ? `Hide ${label.toLowerCase()}` : `Show ${label.toLowerCase()}`}
-          className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition hover:bg-white/[0.06] hover:text-foreground focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
+          className="absolute right-2 top-1/2 inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-md text-muted-foreground transition hover:bg-secondary hover:text-foreground focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
         >
           {visible ? <EyeOff className="h-4 w-4" aria-hidden="true" /> : <Eye className="h-4 w-4" aria-hidden="true" />}
         </button>
@@ -94,7 +94,7 @@ export function PasswordRequirements({ password }: { password: string }) {
   ] as const
 
   return (
-    <div className="rounded-lg border border-white/[0.08] bg-white/[0.025] px-3.5 py-3">
+    <div className="rounded-lg border border-border bg-muted px-3.5 py-3">
       <p className="mb-2 text-xs font-medium text-foreground">Password requirements</p>
       <div className="grid grid-cols-1 gap-1.5 sm:grid-cols-2">
         {requirements.map(([label, valid]) => (
@@ -123,9 +123,9 @@ export function AuthButton({ children, loading = false, ...props }: React.Button
 
 export function AuthNotice({ kind = 'error', children }: { kind?: 'error' | 'success' | 'info'; children: ReactNode }) {
   const styles = {
-    error: 'border-red-400/25 bg-red-400/[0.06] text-red-200',
-    success: 'border-emerald-400/25 bg-emerald-400/[0.06] text-emerald-200',
-    info: 'border-electric-blue/25 bg-electric-blue/[0.06] text-blue-100',
+    error: 'border-red-700/20 bg-red-50 text-red-800',
+    success: 'border-emerald-700/20 bg-emerald-50 text-emerald-800',
+    info: 'border-electric-blue/25 bg-blue-50 text-blue-900',
   }
   return <p role={kind === 'error' ? 'alert' : 'status'} className={cn('rounded-lg border px-3.5 py-3 text-xs leading-5', styles[kind])}>{children}</p>
 }
@@ -150,14 +150,14 @@ export function SocialAuthButtons() {
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground before:h-px before:flex-1 before:bg-white/[0.1] after:h-px after:flex-1 after:bg-white/[0.1]">
+      <div className="flex items-center gap-3 text-[0.65rem] uppercase tracking-[0.2em] text-muted-foreground before:h-px before:flex-1 before:bg-border after:h-px after:flex-1 after:bg-border">
         Or continue with
       </div>
       <div className="grid gap-2 sm:grid-cols-2">
         <button
           type="button"
           onClick={() => window.location.assign('/api/auth/google')}
-          className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/[0.1] bg-white/[0.02] text-xs font-medium text-foreground transition duration-200 hover:-translate-y-0.5 hover:border-electric-blue/60 hover:bg-electric-blue/[0.06] focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
+          className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-white text-xs font-medium text-foreground transition duration-200 hover:-translate-y-0.5 hover:border-electric-blue/60 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
         >
           <span className="font-semibold text-[#4285f4] transition-transform duration-200 group-hover:scale-110">G</span>
           Google
@@ -168,7 +168,7 @@ export function SocialAuthButtons() {
             setProvider('Microsoft')
             setOauthMessage('Microsoft sign-in is not configured yet. Connect an Entra ID OAuth provider before enabling this action.')
           }}
-          className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-white/[0.1] bg-white/[0.02] text-xs font-medium text-foreground transition duration-200 hover:-translate-y-0.5 hover:border-electric-blue/60 hover:bg-electric-blue/[0.06] focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
+          className="group inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-border bg-white text-xs font-medium text-foreground transition duration-200 hover:-translate-y-0.5 hover:border-electric-blue/60 hover:bg-secondary focus:outline-none focus:ring-2 focus:ring-electric-blue/40"
         >
           <span className="grid h-3.5 w-3.5 grid-cols-2 gap-px transition-transform duration-200 group-hover:rotate-6" aria-hidden="true">
             <span className="bg-[#f35325]" />

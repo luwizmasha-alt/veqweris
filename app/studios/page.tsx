@@ -32,7 +32,7 @@ export default function StudiosPage() {
           className="absolute inset-0 -z-10"
           style={{
             background:
-              'radial-gradient(80% 70% at 50% 20%, rgba(45,140,255,0.18), transparent 55%), linear-gradient(180deg, #061326 0%, #02050a 100%)',
+              'radial-gradient(80% 70% at 50% 20%, rgba(21,94,239,0.12), transparent 55%), linear-gradient(180deg, #ffffff 0%, #edf4ff 100%)',
           }}
         />
         <div className="veq-grid absolute inset-0 -z-10 opacity-25" />

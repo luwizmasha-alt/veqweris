@@ -5,8 +5,8 @@ import { Cpu, Lightbulb, Network, Orbit } from 'lucide-react'
 
 const principles = [
   { title: 'Intelligent engineering', description: 'Build considered systems for complex, real-world work.', Icon: Cpu, tone: 'text-cyan' },
-  { title: 'Creative innovation', description: 'Develop original stories, music and interactive ideas.', Icon: Lightbulb, tone: 'text-fuchsia-300' },
-  { title: 'Future-ready technology', description: 'Explore emerging tools with curiosity and discipline.', Icon: Orbit, tone: 'text-violet-300' },
+  { title: 'Creative innovation', description: 'Develop original stories, music and interactive ideas.', Icon: Lightbulb, tone: 'text-magenta' },
+  { title: 'Future-ready technology', description: 'Explore emerging tools with curiosity and discipline.', Icon: Orbit, tone: 'text-violet' },
   { title: 'Connected experiences', description: 'Let each project contribute to a broader creative vision.', Icon: Network, tone: 'text-electric-blue' },
 ]
 
