@@ -37,7 +37,7 @@ export function VeqLogo({
 
   if (href) {
     return (
-      <Link href={href} aria-label="VEQWERIS home" className="inline-flex items-center -ml-2 sm:-ml-3">
+      <Link href={href} aria-label="VEQWERIS home" className="inline-flex items-center -ml-2 rounded-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan focus-visible:ring-offset-4 focus-visible:ring-offset-background sm:-ml-3">
         {content}
       </Link>
     )

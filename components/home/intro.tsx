@@ -1,6 +1,14 @@
 import { Section } from '@/components/section'
 import { Reveal } from '@/components/reveal'
 import { Eyebrow } from '@/components/section-header'
+import { Cpu, Lightbulb, Network, Orbit } from 'lucide-react'
+
+const principles = [
+  { title: 'Intelligent engineering', description: 'Build considered systems for complex, real-world work.', Icon: Cpu, tone: 'text-cyan' },
+  { title: 'Creative innovation', description: 'Develop original stories, music and interactive ideas.', Icon: Lightbulb, tone: 'text-fuchsia-300' },
+  { title: 'Future-ready technology', description: 'Explore emerging tools with curiosity and discipline.', Icon: Orbit, tone: 'text-violet-300' },
+  { title: 'Connected experiences', description: 'Let each project contribute to a broader creative vision.', Icon: Network, tone: 'text-electric-blue' },
+]
 
 export function Intro() {
   return (
@@ -24,6 +32,19 @@ export function Intro() {
             films, music, games and research that extend a single connected vision.
           </p>
         </Reveal>
+      </div>
+
+      <div className="mt-20 border-t border-border pt-8">
+        <Eyebrow>Why VEQWERIS</Eyebrow>
+        <div className="mt-7 grid gap-x-8 sm:grid-cols-2 xl:grid-cols-4">
+          {principles.map(({ title, description, Icon, tone }) => (
+            <article key={title} className="border-b border-border py-6 last:border-b-0 sm:even:border-l sm:even:pl-6 xl:border-b-0 xl:border-l xl:pl-6 xl:first:border-l-0 xl:first:pl-0">
+              <Icon aria-hidden="true" className={`h-5 w-5 ${tone}`} strokeWidth={1.7} />
+              <h3 className="mt-5 text-base font-semibold text-foreground">{title}</h3>
+              <p className="mt-2 max-w-xs text-sm leading-relaxed text-muted-foreground">{description}</p>
+            </article>
+          ))}
+        </div>
       </div>
     </Section>
   )

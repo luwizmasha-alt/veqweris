@@ -22,24 +22,28 @@ export function Vision() {
       </Section>
 
       <section className="relative overflow-hidden">
-        <div
-          className="absolute inset-0 -z-10"
-          style={{
-            background:
-              'radial-gradient(70% 60% at 50% 120%, rgba(11,92,255,0.22), transparent 60%), linear-gradient(180deg, #02050a, #061326)',
-          }}
-        />
-        <div className="mx-auto max-w-5xl px-5 py-28 text-center sm:px-8 sm:py-36">
+        <div className="absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_85%_100%,rgba(121,87,255,0.24),transparent_58%),radial-gradient(45%_60%_at_12%_0%,rgba(23,105,255,0.18),transparent_62%),linear-gradient(145deg,#0a1024,#050816_72%)]" />
+        <div className="veq-grid absolute inset-0 -z-10 opacity-20" />
+        <div className="mx-auto max-w-7xl px-5 py-24 sm:px-8 sm:py-32">
           <Reveal>
-            <h2 className="text-balance text-3xl font-semibold leading-[1.05] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
-              Build systems. Create worlds. Engineer what comes next.
-            </h2>
-            <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            <div className="max-w-4xl border-l border-cyan/60 pl-6 sm:pl-10">
+              <Eyebrow>Intelligence Creates Tomorrow</Eyebrow>
+              <h2 className="mt-7 text-balance text-4xl font-semibold uppercase leading-[1.04] tracking-tight text-foreground sm:text-6xl lg:text-7xl">
+                Intelligence creates tomorrow.
+              </h2>
+              <p className="mt-6 max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground sm:text-lg">
+                Technology and original creative work, engineered with a long view.
+              </p>
+            </div>
+            <div className="mt-10 flex flex-col gap-3 pl-6 sm:flex-row sm:pl-10">
               <VeqButtonLink href={SYSTEMS_APP_URL} size="lg">
                 Enter Systems
               </VeqButtonLink>
               <VeqButtonLink href="/about" variant="secondary" size="lg">
                 About VEQWERIS
+              </VeqButtonLink>
+              <VeqButtonLink href="#ecosystem" variant="ghost" size="lg" className="text-muted-foreground">
+                Explore divisions
               </VeqButtonLink>
             </div>
           </Reveal>

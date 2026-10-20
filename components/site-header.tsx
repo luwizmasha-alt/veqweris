@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { Search } from 'lucide-react'
 import { usePathname, useRouter } from 'next/navigation'
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { useAuth } from '@/components/auth-provider'
@@ -125,16 +126,18 @@ export function SiteHeader() {
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between gap-4 px-5 sm:px-8">
         <VeqLogo />
 
-        <nav className="hidden flex-1 items-center justify-center gap-1 lg:flex" aria-label="Primary">
+        <nav className="hidden flex-1 items-center justify-center gap-0.5 lg:flex" aria-label="Primary">
           {NAV_ITEMS.map((item) => {
             const active = pathname === item.href
             return (
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'relative rounded-md px-2.5 py-2 text-[0.73rem] font-semibold uppercase tracking-[0.18em] transition-colors',
+                  'relative rounded-md px-1.5 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.1em] transition-colors 2xl:px-2 2xl:text-[0.67rem]',
                   active ? 'text-foreground' : 'text-muted-foreground hover:text-foreground',
+                  'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan',
                 )}
               >
                 {item.label}
@@ -147,22 +150,10 @@ export function SiteHeader() {
         </nav>
 
         <div className="flex items-center gap-2 sm:gap-3">
-          <form onSubmit={handleSearchSubmit} className="relative hidden w-[240px] xl:block">
-            <div className="flex items-center overflow-hidden rounded-full border border-border bg-card/85 shadow-[0_0_0_1px_rgba(112,146,255,0.08)] transition focus-within:border-electric-blue/60 focus-within:shadow-[0_0_0_1px_rgba(49,131,255,0.35),0_18px_35px_rgba(18,30,60,0.35)]">
+          <form onSubmit={handleSearchSubmit} className="relative hidden w-[190px] 2xl:w-[220px] xl:block">
+            <div className="flex items-center overflow-hidden rounded-md border border-border bg-card/85 transition focus-within:border-cyan/60 focus-within:ring-2 focus-within:ring-cyan/15">
               <span className="flex h-10 items-center pl-3 text-muted-foreground">
-                <svg
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                  className="h-4 w-4"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.8"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <circle cx="11" cy="11" r="6" />
-                  <path d="M16 16L21 21" />
-                </svg>
+                <Search aria-hidden="true" className="h-4 w-4" />
               </span>
               <input
                 type="search"
@@ -214,7 +205,7 @@ export function SiteHeader() {
               {!isAdmin && (
                 <Link
                   href="/auth/security"
-                  className="hidden h-9 items-center rounded-md border border-border bg-card px-3 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-foreground sm:inline-flex"
+                  className="hidden h-9 items-center rounded-md border border-border bg-card px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-foreground transition hover:border-cyan/50 sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
                 >
                   Security
                 </Link>
@@ -222,7 +213,7 @@ export function SiteHeader() {
               <button
                 type="button"
                 onClick={logout}
-                className="hidden h-9 items-center rounded-md border border-border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-muted-foreground transition hover:text-foreground sm:inline-flex"
+                className="hidden h-9 items-center rounded-md border border-border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-muted-foreground transition hover:text-foreground sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               >
                 Log out
               </button>
@@ -231,13 +222,13 @@ export function SiteHeader() {
             <>
               <Link
                 href="/auth/login"
-                className="hidden h-9 items-center rounded-md border border-border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-foreground transition hover:bg-card sm:inline-flex"
+                className="hidden h-9 items-center rounded-md border border-border px-3 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-foreground transition hover:border-cyan/50 hover:bg-card sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               >
                 Log in
               </Link>
               <Link
                 href="/auth/signup"
-                className="hidden h-9 items-center rounded-md bg-primary px-4 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)] sm:inline-flex"
+                className="hidden h-9 items-center rounded-md bg-primary px-4 text-[0.62rem] font-semibold uppercase tracking-[0.12em] text-primary-foreground shadow-[0_0_0_1px_rgba(23,105,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(23,105,255,0.35)] sm:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
               >
                 Sign up
               </Link>
@@ -246,7 +237,7 @@ export function SiteHeader() {
 
           <Link
             href={SYSTEMS_APP_URL}
-            className="hidden h-9 items-center rounded-md bg-primary px-4 text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-primary-foreground shadow-[0_0_0_1px_rgba(45,140,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(45,140,255,0.35)] lg:inline-flex"
+            className="hidden h-9 items-center rounded-md bg-primary px-4 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-primary-foreground shadow-[0_0_0_1px_rgba(23,105,255,0.4)] transition-all duration-300 hover:bg-electric-blue hover:shadow-[0_0_24px_rgba(23,105,255,0.35)] xl:inline-flex focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan"
           >
             Enter Systems
           </Link>
@@ -255,8 +246,9 @@ export function SiteHeader() {
             type="button"
             onClick={() => setOpen((v) => !v)}
             aria-expanded={open}
+            aria-controls="mobile-navigation"
             aria-label={open ? 'Close menu' : 'Open menu'}
-            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition hover:border-cyan/50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan lg:hidden"
           >
             <span className="relative flex h-4 w-5 flex-col justify-between">
               <span
@@ -285,9 +277,10 @@ export function SiteHeader() {
       {/* Mobile menu */}
       <div
         className={cn(
-          'overflow-hidden border-border bg-near-black/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 lg:hidden',
-          open ? 'max-h-[80vh] border-t opacity-100' : 'max-h-0 opacity-0',
+          'border-border bg-near-black/95 backdrop-blur-xl transition-[max-height,opacity] duration-500 lg:hidden',
+          open ? 'max-h-[calc(100dvh-72px)] overflow-y-auto border-t opacity-100' : 'max-h-0 overflow-hidden opacity-0',
         )}
+        id="mobile-navigation"
       >
         <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-6 sm:px-8" aria-label="Mobile">
           {NAV_ITEMS.map((item) => {
@@ -296,8 +289,9 @@ export function SiteHeader() {
               <Link
                 key={item.href}
                 href={item.href}
+                aria-current={active ? 'page' : undefined}
                 className={cn(
-                  'rounded-md px-3 py-3 text-lg font-medium tracking-wide transition-colors',
+                  'rounded-md px-3 py-3 text-base font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan',
                   active ? 'bg-secondary text-foreground' : 'text-muted-foreground hover:text-foreground',
                 )}
               >
@@ -305,6 +299,21 @@ export function SiteHeader() {
               </Link>
             )
           })}
+          <form onSubmit={handleSearchSubmit} className="mt-4 flex items-center gap-2">
+            <label className="sr-only" htmlFor="mobile-search">Search VEQWERIS</label>
+            <input
+              id="mobile-search"
+              type="search"
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              placeholder="Search VEQWERIS"
+              className="h-11 min-w-0 flex-1 rounded-md border border-border bg-card px-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-cyan focus:outline-none focus:ring-2 focus:ring-cyan/20"
+            />
+            <button type="submit" className="inline-flex h-11 items-center gap-2 rounded-md bg-primary px-4 text-xs font-semibold uppercase tracking-[0.12em] text-primary-foreground transition hover:bg-electric-blue focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan">
+              <Search aria-hidden="true" className="h-4 w-4" />
+              Search
+            </button>
+          </form>
           {isAuthenticated ? (
             <>
               <Link

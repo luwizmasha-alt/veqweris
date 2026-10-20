@@ -60,7 +60,7 @@ export const metadata: Metadata = {
 
 export const viewport: Viewport = {
   colorScheme: 'dark',
-  themeColor: '#02050a',
+  themeColor: '#050816',
   width: 'device-width',
   initialScale: 1,
 }
@@ -71,7 +71,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`dark bg-background ${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" data-scroll-behavior="smooth" className={`dark bg-background ${geistSans.variable} ${geistMono.variable}`}>
       <body className="font-sans">
         <AuthProvider>
           <CursorSystem />

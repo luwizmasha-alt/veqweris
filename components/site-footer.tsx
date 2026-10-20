@@ -6,16 +6,16 @@ export function SiteFooter() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-border bg-near-black">
+    <footer className="border-t border-border bg-[linear-gradient(180deg,#0a1024_0%,#050816_100%)]">
       <div className="mx-auto max-w-7xl px-5 py-16 sm:px-8">
         <div className="flex flex-col gap-12 lg:flex-row lg:justify-between">
           <div className="max-w-sm">
             <VeqLogo href="/" />
-            <p className="mt-5 font-mono text-[0.7rem] uppercase tracking-[0.28em] text-electric-blue">
+            <p className="mt-5 font-mono text-[0.7rem] uppercase tracking-[0.2em] text-cyan">
               {SITE_TAGLINE}
             </p>
             <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-              Technology, systems and creative worlds engineered for what comes next.
+              Intelligent technology and original creative worlds, engineered for what comes next.
             </p>
           </div>
 

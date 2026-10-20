@@ -29,13 +29,22 @@ export const DIVISIONS: Division[] = [
     index: '02',
   },
   {
+    slug: 'worlds',
+    name: 'VEQWERIS Worlds',
+    short: 'Immersive digital environments and interconnected experiences.',
+    description:
+      'Original digital environments and interconnected experiences being developed across VEQWERIS stories, music and interactive projects.',
+    href: '/worlds',
+    index: '03',
+  },
+  {
     slug: 'music',
     name: 'VEQWERIS Music',
     short: 'Artists, soundtracks, releases and original scores.',
     description:
       'Original music, scores and releases that give the VEQWERIS worlds their sound and extend them beyond the screen.',
     href: '/music',
-    index: '03',
+    index: '04',
   },
   {
     slug: 'gaming',
@@ -44,7 +53,7 @@ export const DIVISIONS: Division[] = [
     description:
       'Interactive experiences that let audiences step inside VEQWERIS worlds — extending stories, characters and universes into play.',
     href: '/gaming',
-    index: '04',
+    index: '05',
   },
   {
     slug: 'labs',
@@ -53,7 +62,7 @@ export const DIVISIONS: Division[] = [
     description:
       'A research division exploring intelligent systems, interaction and emerging technology that informs everything the company builds.',
     href: '/labs',
-    index: '05',
+    index: '06',
   },
 ]
 
