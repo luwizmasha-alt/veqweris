@@ -13,15 +13,8 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'Enter a valid email address.' }, { status: 400 })
   }
 
-  // A provider must be wired before this endpoint can issue reset tokens or email links.
-  if (!process.env.AUTH_EMAIL_PROVIDER) {
-    return NextResponse.json(
-      { error: 'Password reset is not configured on this deployment.' },
-      { status: 503 },
-    )
-  }
-
-  return NextResponse.json({
-    message: 'If an account exists for this email address, password reset instructions have been sent.',
-  })
+  return NextResponse.json(
+    { error: 'Password reset is unavailable until an email and identity provider is configured.' },
+    { status: 503 },
+  )
 }
