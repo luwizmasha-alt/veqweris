@@ -24,7 +24,7 @@ type AuthContextValue = {
   isAuthenticated: boolean
   login: (email: string, password: string) => SiteUser | null
   signup: (name: string, email: string, password: string) => boolean
-  logout: () => void
+  logout: () => Promise<void>
 }
 
 const AuthContext = createContext<AuthContextValue | undefined>(undefined)
@@ -36,14 +36,17 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const restoreSession = async () => {
       try {
-        const response = await fetch('/api/auth/me', { cache: 'no-store' })
-        if (response.ok) {
-          const result = (await response.json()) as { user?: SiteUser }
-          if (result.user) {
-            setUser(result.user)
-            setIsReady(true)
-            return
+        try {
+          const response = await fetch('/api/auth/me', { cache: 'no-store' })
+          if (response.ok) {
+            const result = (await response.json()) as { user?: SiteUser | null }
+            if (result.user) {
+              setUser(result.user)
+              return
+            }
           }
+        } catch (error) {
+          console.error('Unable to restore the server auth session.', error)
         }
 
         ensureSeededUsers()
@@ -55,6 +58,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             window.localStorage.removeItem(AUTH_STORAGE_KEY)
           }
         }
+      } catch (error) {
+        console.error('Unable to restore the local auth session.', error)
       } finally {
         setIsReady(true)
       }
@@ -112,9 +117,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     return true
   }, [])
 
-  const logout = useCallback(() => {
-    setUser(null)
-    window.localStorage.removeItem(AUTH_STORAGE_KEY)
+  const logout = useCallback(async () => {
+    try {
+      const response = await fetch('/api/auth/logout', { method: 'POST' })
+      if (!response.ok) {
+        throw new Error(`Logout request failed with status ${response.status}.`)
+      }
+    } catch (error) {
+      console.error('Unable to clear the server auth session.', error)
+    } finally {
+      setUser(null)
+      window.localStorage.removeItem(AUTH_STORAGE_KEY)
+    }
   }, [])
 
   const value = useMemo<AuthContextValue>(

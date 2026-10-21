@@ -5,7 +5,7 @@ import { AUTH_SESSION_COOKIE, readAuthSession } from '@/lib/auth-session'
 export async function GET() {
   const cookieStore = await cookies()
   const session = readAuthSession(cookieStore.get(AUTH_SESSION_COOKIE)?.value)
-  if (!session) return NextResponse.json({ user: null }, { status: 401 })
+  if (!session) return NextResponse.json({ user: null })
 
   return NextResponse.json({
     user: {

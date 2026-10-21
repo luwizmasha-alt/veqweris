@@ -202,8 +202,9 @@ export default function AdminPage() {
           <h2 className="text-2xl font-semibold tracking-tight text-foreground">Add a new item</h2>
           <div className="mt-6 space-y-5">
             <div>
-              <label className="mb-2 block text-sm text-foreground">Category</label>
+              <label htmlFor="item-category" className="mb-2 block text-sm text-foreground">Category</label>
               <select
+                id="item-category"
                 value={form.category}
                 onChange={(event) => updateDestinationFromCategory(event.target.value)}
                 className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground"
@@ -220,8 +221,9 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-foreground">Title</label>
+              <label htmlFor="item-title" className="mb-2 block text-sm text-foreground">Title</label>
               <input
+                id="item-title"
                 value={form.title}
                 onChange={(event) => setForm((current) => ({ ...current, title: event.target.value }))}
                 className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground"
@@ -231,8 +233,9 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-foreground">Description</label>
+              <label htmlFor="item-description" className="mb-2 block text-sm text-foreground">Description</label>
               <textarea
+                id="item-description"
                 value={form.description}
                 onChange={(event) => setForm((current) => ({ ...current, description: event.target.value }))}
                 rows={4}
@@ -244,8 +247,9 @@ export default function AdminPage() {
 
             <div className="grid gap-5 sm:grid-cols-2">
               <div>
-                <label className="mb-2 block text-sm text-foreground">Status</label>
+                <label htmlFor="item-status" className="mb-2 block text-sm text-foreground">Status</label>
                 <select
+                  id="item-status"
                   value={form.status}
                   onChange={(event) => setForm((current) => ({ ...current, status: event.target.value }))}
                   className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground"
@@ -258,10 +262,11 @@ export default function AdminPage() {
               </div>
 
               <div>
-                <label className="mb-2 block text-sm text-foreground">
+                <label htmlFor="item-destination" className="mb-2 block text-sm text-foreground">
                   {form.category.toLowerCase() === 'music' ? 'Platform destination' : 'Destination page'}
                 </label>
                 <select
+                  id="item-destination"
                   value={form.href}
                   onChange={(event) => setForm((current) => ({ ...current, href: event.target.value }))}
                   className="w-full rounded-md border border-border bg-background px-3 py-2.5 text-sm text-foreground"
@@ -276,8 +281,9 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-foreground">Project photo</label>
+              <label htmlFor="project-image" className="mb-2 block text-sm text-foreground">Project photo</label>
               <input
+                id="project-image"
                 type="file"
                 accept="image/*"
                 onChange={handleImagePick}
@@ -287,8 +293,9 @@ export default function AdminPage() {
             </div>
 
             <div>
-              <label className="mb-2 block text-sm text-foreground">Project video</label>
+              <label htmlFor="project-video" className="mb-2 block text-sm text-foreground">Project video</label>
               <input
+                id="project-video"
                 type="file"
                 accept="video/*"
                 onChange={handleVideoPick}
@@ -299,13 +306,13 @@ export default function AdminPage() {
 
             {form.image ? (
               <div className="overflow-hidden rounded-xl border border-border bg-background p-3">
-                <img src={form.image} alt="Project preview" className="h-28 w-full rounded-lg object-cover" />
+                <img src={form.image} alt={`${form.title || 'Project'} preview`} className="h-28 w-full rounded-lg object-cover" />
               </div>
             ) : null}
 
             {form.video ? (
               <div className="overflow-hidden rounded-xl border border-border bg-background p-3">
-                <video src={form.video} controls className="h-40 w-full rounded-lg object-cover" />
+                <video src={form.video} controls aria-label={`${form.title || 'Project'} video preview`} className="h-40 w-full rounded-lg object-cover" />
               </div>
             ) : null}
 

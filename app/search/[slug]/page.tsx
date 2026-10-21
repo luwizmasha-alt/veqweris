@@ -23,7 +23,14 @@ const BASE_SEARCH_ITEMS = [
 ]
 
 function normalizeSlug(value: string) {
-  return decodeURIComponent(value).replace(/-/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase()
+  let decoded = value
+  try {
+    decoded = decodeURIComponent(value)
+  } catch {
+    decoded = value
+  }
+
+  return decoded.replace(/-/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase()
 }
 
 export default async function SearchRoomPage({
@@ -40,11 +47,12 @@ export default async function SearchRoomPage({
     type: item.category.charAt(0).toUpperCase() + item.category.slice(1),
     description: item.description,
   }))
+  const searchTerms = roomTitle.split(/\s+/).filter(Boolean)
 
   const matches = [...BASE_SEARCH_ITEMS, ...uploadedItems]
     .filter((item) => {
       const haystack = [item.label, item.description ?? '', item.type ?? '', item.href].join(' ').toLowerCase()
-      return haystack.includes(roomTitle)
+      return searchTerms.every((term) => haystack.includes(term))
     })
     .slice(0, 10)
 
@@ -69,9 +77,9 @@ export default async function SearchRoomPage({
               No room results were found for this query. Try a different search term.
             </div>
           ) : (
-            matches.map((item) => (
+            matches.map((item, index) => (
               <Link
-                key={`${item.href}-${item.label}`}
+                key={`${item.href}-${item.label}-${item.type}-${index}`}
                 href={item.href}
                 className="block rounded-xl border border-border bg-near-black/40 p-4 transition-colors hover:border-electric-blue/50 hover:bg-card"
               >

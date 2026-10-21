@@ -74,15 +74,15 @@ export function SiteHeader() {
   }, [])
 
   useEffect(() => {
-    const normalized = query.trim().toLowerCase()
-    if (!normalized) {
+    const terms = query.trim().toLowerCase().split(/\s+/).filter(Boolean)
+    if (terms.length === 0) {
       setSearchResults([])
       return
     }
 
     const matches = SEARCH_ITEMS.filter((item) => {
       const haystack = [item.label, item.description ?? '', item.type ?? '', item.href].join(' ').toLowerCase()
-      return haystack.includes(normalized)
+      return terms.every((term) => haystack.includes(term))
     }).slice(0, 8)
 
     setSearchResults(matches)
@@ -100,6 +100,24 @@ export function SiteHeader() {
   }, [pathname])
 
   useEffect(() => {
+    const closeForDesktop = () => {
+      if (window.matchMedia('(min-width: 1024px)').matches) {
+        setOpen(false)
+      }
+    }
+    const closeForEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setOpen(false)
+    }
+
+    window.addEventListener('resize', closeForDesktop)
+    window.addEventListener('keydown', closeForEscape)
+    return () => {
+      window.removeEventListener('resize', closeForDesktop)
+      window.removeEventListener('keydown', closeForEscape)
+    }
+  }, [])
+
+  useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : ''
     return () => {
       document.body.style.overflow = ''
@@ -111,6 +129,8 @@ export function SiteHeader() {
     const trimmed = query.trim()
     if (!trimmed) return
     router.push(`/search/${encodeURIComponent(trimmed)}`)
+    setQuery('')
+    setSearchResults([])
     setOpen(false)
   }
 
@@ -171,9 +191,9 @@ export function SiteHeader() {
 
             {searchResults.length > 0 && (
               <div className="absolute left-0 right-0 top-full z-50 mt-2 overflow-hidden rounded-xl border border-slate-200 bg-white shadow-[0_16px_36px_rgba(16,37,67,0.14)]">
-                {searchResults.map((item) => (
+                {searchResults.map((item, index) => (
                   <Link
-                    key={`${item.href}-${item.label}`}
+                    key={`${item.href}-${item.label}-${item.type}-${index}`}
                     href={item.href}
                     onClick={() => {
                       setQuery('')
@@ -193,6 +213,14 @@ export function SiteHeader() {
                   </Link>
                 ))}
               </div>
+            )}
+            {query.trim() && searchResults.length === 0 && (
+              <p
+                className="absolute left-0 right-0 top-full z-50 mt-2 rounded-xl border border-slate-200 bg-white px-4 py-3 text-xs text-slate-600 shadow-[0_16px_36px_rgba(16,37,67,0.14)]"
+                aria-live="polite"
+              >
+                No quick matches. Press Go to search all content.
+              </p>
             )}
           </form>
         </div>
@@ -279,6 +307,8 @@ export function SiteHeader() {
           open ? 'max-h-[calc(100dvh-72px)] overflow-y-auto border-t opacity-100' : 'max-h-0 overflow-hidden opacity-0',
         )}
         id="mobile-navigation"
+        aria-hidden={!open}
+        inert={!open}
       >
         <nav className="mx-auto flex max-w-7xl flex-col gap-1 px-5 py-6 sm:px-8" aria-label="Mobile">
           {NAV_ITEMS.map((item) => {
